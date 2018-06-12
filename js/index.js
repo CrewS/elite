@@ -57,6 +57,7 @@
             <Header name="123" />
             <Sidebar name="123" />
             <Footer name="123" />
+            <div>test</div>
             </div>
             );
         }

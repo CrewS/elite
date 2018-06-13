@@ -1,0 +1,50 @@
+#root{
+    background: #eeeeee;
+    height: 100%;
+}
+.share-content{
+    width: 800px;
+    margin: 0 auto;
+    min-height: 400px;
+    background-color: #fff;
+    margin-top: 30px;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 20px;
+    .doc-title{
+        padding: 10px 0;
+        border-bottom: 1px solid #dedede;
+        font-size: 26px;
+    }
+    .info-block{
+        margin-top: 10px;
+    }
+    .limitTime{
+        margin-left: 12px;
+    }
+    .content{
+        text-align: center;
+    }
+    .download-wrap{
+        height: 60px;
+        margin: 0 auto;
+        margin-top: 80px;
+        display: inline-block;
+        position: relative;
+    }
+    .pwdinput{
+        width: 100px;
+        margin: 0 12px;
+    }
+    .on-error{
+        border: 1px solid #de0010;
+    }
+    .error-tips{
+        color: #de0010;
+        position: absolute;
+        left: 48px;
+        margin-top: 8px;
+        font-size: 16px;
+    }
+}

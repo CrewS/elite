@@ -1,6 +1,10 @@
 class Header extends React.Component {
     render() {
-        return <div>Header</div>;
+        return (
+            <div className="header">
+                Header
+            </div>
+        );
     }
 }
 class Sidebar extends React.Component {

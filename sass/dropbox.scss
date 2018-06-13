@@ -1,0 +1,78 @@
+.dropboxfile{   
+    max-width: 1175px;
+    height: auto;
+    margin: 0 auto;
+    overflow: hidden;
+    border-top:1px solid #e0e0e0;
+    .isnofile{  
+        width: 140px;
+        height: auto;
+        margin: 0 auto;
+        margin-top:  20px;
+        padding-bottom: 20px;
+        img{    
+            width: 140px;
+            height: 140px;
+            display: block;
+            vertical-align: top;
+            margin: 0 auto;
+        }
+        p{  
+            text-align: center; 
+            line-height: 28px;  
+            font-size: 14px;
+            color: #65646D
+        }
+        button{ 
+            display: block;
+            margin: 0 auto;
+        }
+    }
+    .table-box{  
+        width: 100%;
+        .list-box{   
+            padding: 8px 0 50px 0;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            .btn-ground{ 
+                margin-bottom: 8px;
+                margin-left: 8px;
+            }
+        }
+        .btnlist{    
+            float: right;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+/*按钮隐藏*/
+.btn-none{   
+    display: none;
+}
+.active{ 
+    display: none;
+}
+
+/*table样式修改*/
+.ant-table table{   
+    border-radius: 0px;
+    border-top: 1px solid #e0e0e0;
+}
+.ant-table-tbody>tr>td, .ant-table-thead>tr>th{  
+    border-right:1px solid #e0e0e0;
+}
+.ant-table-tbody>tr>td:last-child, .ant-table-thead>tr>th:last-child{  
+    border-right:none;
+}
+
+.ant-pagination{    
+    text-align: center;
+}

@@ -1,0 +1,61 @@
+@charset "UTF-8";
+.dropboxfile {
+  max-width: 1175px;
+  height: auto;
+  margin: 0 auto;
+  overflow: hidden;
+  border-top: 1px solid #e0e0e0; }
+  .dropboxfile .isnofile {
+    width: 140px;
+    height: auto;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding-bottom: 20px; }
+    .dropboxfile .isnofile img {
+      width: 140px;
+      height: 140px;
+      display: block;
+      vertical-align: top;
+      margin: 0 auto; }
+    .dropboxfile .isnofile p {
+      text-align: center;
+      line-height: 28px;
+      font-size: 14px;
+      color: #65646D; }
+    .dropboxfile .isnofile button {
+      display: block;
+      margin: 0 auto; }
+  .dropboxfile .table-box {
+    width: 100%; }
+    .dropboxfile .table-box .list-box {
+      padding: 8px 0 50px 0;
+      border: 1px solid #e0e0e0;
+      border-top: none; }
+      .dropboxfile .table-box .list-box .btn-ground {
+        margin-bottom: 8px;
+        margin-left: 8px; }
+    .dropboxfile .table-box .btnlist {
+      float: right; }
+
+/*按钮隐藏*/
+.btn-none {
+  display: none; }
+
+.active {
+  display: none; }
+
+/*table样式修改*/
+.ant-table table {
+  border-radius: 0px;
+  border-top: 1px solid #e0e0e0; }
+
+.ant-table-tbody > tr > td, .ant-table-thead > tr > th {
+  border-right: 1px solid #e0e0e0; }
+
+.ant-table-tbody > tr > td:last-child, .ant-table-thead > tr > th:last-child {
+  border-right: none; }
+
+.ant-pagination {
+  text-align: center; }
+
+/*# sourceMappingURL=dropbox.css.map */

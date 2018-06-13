@@ -1,6 +1,10 @@
 class Header extends React.Component {
     render() {
-        return <div>Header</div>;
+        return (
+            <div className="header">
+                Header
+            </div>
+        );
     }
 }
 class Sidebar extends React.Component {
@@ -13,25 +17,3 @@ class Footer extends React.Component {
         return <div>Footer</div>;
     }
 }
-//文件展示
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

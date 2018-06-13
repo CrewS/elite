@@ -40,3 +40,7 @@ q:before, q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0; }
+
+@import './common.scss';
+@import './share.scss';
+@import './component.scss';

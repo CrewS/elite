@@ -1,0 +1,27 @@
+$blue: #0692e1;
+$shallowblue: #e6f4fc;
+$grey: #101010;
+$shallowgrey: #eaeaea;
+
+.set{
+  .dropdown{
+    display: inline-block;
+    width: 50px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    vertical-align: text-top;
+  }
+  .ant-table table{
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+  tr>th:last-child,tr>td:last-child{
+    border-right: none;
+  }
+}
+.sethello{
+  color: $grey
+}

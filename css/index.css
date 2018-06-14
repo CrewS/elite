@@ -1,3 +1,21 @@
+.set .dropdown {
+  display: inline-block;
+  width: 50px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: text-top; }
+.set .ant-table table {
+  border-left: none;
+  border-right: none;
+  border-radius: 0; }
+.set tr > th:last-child, .set tr > td:last-child {
+  border-right: none; }
+
+.sethello {
+  color: #101010; }
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -40,6 +58,9 @@ q:before, q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0; }
+
+div, p, span, a {
+  font-size: 14px; }
 
 .header {
   height: 60px;

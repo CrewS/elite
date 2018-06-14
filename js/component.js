@@ -1,5 +1,5 @@
 class Tables extends React.Component {
-    render() {
-        return <div>{this.props.name}</div>;
-    }
+  render() {
+    return <div>{this.props.name}tables</div>;
+  }
 }

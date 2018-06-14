@@ -59,6 +59,9 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+div, p, span, a {
+  font-size: 14px; }
+
 .header {
   height: 60px;
   border-bottom: 1px solid #dedede;

@@ -5,12 +5,8 @@
       render() {
         return (
           <div>
-            <div>
-                <Header name="123" />
-                <Sidebar name="123" />
-                <Footer name="123" />
-                <DropBoxFile />
-            </div>
+            <Header name="123" />
+            <DropBoxFile />
             <Footer name="123" />
           </div>
         );

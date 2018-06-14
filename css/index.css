@@ -64,6 +64,9 @@ table {
   border-bottom: 1px solid #dedede;
   background-color: #fff; }
 
+.center {
+  text-align: center; }
+
 #root {
   background: #eeeeee;
   height: 100%; }
@@ -112,5 +115,12 @@ table {
   margin-top: 6px;
   display: inline-block;
   vertical-align: top; }
+
+.share-content-block {
+  padding: 20px;
+  border-radius: 4px;
+  border: 1px solid #dedede;
+  background-color: #fdfdfd;
+  margin-top: 20px; }
 
 /*# sourceMappingURL=index.css.map */

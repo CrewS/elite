@@ -19,7 +19,7 @@ class DropBoxFile extends React.Component {
 
 
   onmouseenter = (keyId) => {
-    //console.log(keyId);
+
     this.setState({
       active: keyId
     })
@@ -82,8 +82,8 @@ class DropBoxFile extends React.Component {
             >
               <span>{text}</span>
               <div className={`btnlist ${this.state.active == id.key ? "" : "active"}`}>
-                <antd.Button>编辑</antd.Button>
-                <antd.Button >移动到</antd.Button>
+                <antd.Icon type="edit" />
+                <antd.Icon type="arrow-right" />
                 <antd.Button onClick={this.showConfirm}>删除</antd.Button>
               </div>
             </div>
@@ -139,12 +139,18 @@ class DropBoxFile extends React.Component {
     }
 
     return (
-      <div className="dropboxfile">
+      <div>
+        <antd.Breadcrumb className="file-breadcrumb">
+          <antd.Breadcrumb.Item><antd.Icon type="home" />首页</antd.Breadcrumb.Item>
+          <antd.Breadcrumb.Item><antd.Icon type="folder" /><a href="">文件夹</a></antd.Breadcrumb.Item>
+        </antd.Breadcrumb>
 
-        {FileBoxNo}
+        <div className="dropboxfile">
+          {FileBoxNo}
 
-        {FileBoxIs}
+          {FileBoxIs}
 
+        </div>
       </div>
     )
   }

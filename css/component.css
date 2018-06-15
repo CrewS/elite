@@ -1,0 +1,15 @@
+.radio-item {
+  display: inline-block;
+  width: 100px;
+  margin-top: 6px;
+  display: inline-block;
+  vertical-align: top; }
+
+.share-content-block {
+  padding: 20px;
+  border-radius: 4px;
+  border: 1px solid #dedede;
+  background-color: #fdfdfd;
+  margin-top: 20px; }
+
+/*# sourceMappingURL=component.css.map */

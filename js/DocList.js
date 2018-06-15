@@ -165,44 +165,50 @@ class DocList extends React.Component {
     };
 
     return (
-      <div className="set">
-        <div style={{ marginBottom: '20px'}}>
-          <antd.Icon type="folder-open" style={{ marginRight: '10px' }}/>管理文件
+      <div>
+        <div style={{ margin: '0 0 15px 175px' }}>
+          <Capicity showButton={true} switchSection={this.props.switchSection} />
         </div>
-        <div style={{ border: '1px solid #eaeaea', borderRadius: '5px' }}>
-          <div style={{ margin: '10px'}}>
-            <antd.Dropdown overlay={keyMenu}>
-              <antd.Button style={{ marginLeft: 8 }}>
-                <span className="dropdown">{ this.state.chosenKey === 'type' ? '类型' : '创建人' }</span>
-                <antd.Icon type="down" />
-              </antd.Button>
-            </antd.Dropdown>
-            <antd.Dropdown overlay={valMenu} width="100px">
-              <antd.Button style={{ marginLeft: 8 }}>
-                <span className="dropdown">{ valChosen }</span>
-                <antd.Icon type="down" />
-              </antd.Button>
-            </antd.Dropdown>
-            <antd.Button icon="download" type="primary" style={{ marginLeft:'30px' }} onClick={this.onDownloadSome}>下载</antd.Button>
-            <antd.Button icon="delete" type="primary" style={{ marginLeft:'10px'}} onClick={this.onDeleteSome}>删除</antd.Button>
+        <div className="set">
+          <div style={{ marginBottom: '20px'}}>
+            <antd.Icon type="folder-open" style={{ marginRight: '10px' }}/>管理文件
           </div>
-          <antd.Table
-            rowSelection={rowSelection}
-            columns={columns}
-            dataSource={this.state.doc}
-            bordered
-            pagination={false}
-            onChange={this.handleTableChange}
-          />
-          <antd.Pagination
-            size="small"
-            current={this.state.pageCurrent}
-            total={this.state.pageTotal}
-            onChange={this.handlePageChange}
-            style={{ margin: '15px 0', textAlign: 'center'}}
-          />
+          <div style={{ border: '1px solid #eaeaea', borderRadius: '5px' }}>
+            <div style={{ margin: '10px'}}>
+              <antd.Dropdown overlay={keyMenu}>
+                <antd.Button style={{ marginLeft: 8 }}>
+                  <span className="dropdown">{ this.state.chosenKey === 'type' ? '类型' : '创建人' }</span>
+                  <antd.Icon type="down" />
+                </antd.Button>
+              </antd.Dropdown>
+              <antd.Dropdown overlay={valMenu} width="100px">
+                <antd.Button style={{ marginLeft: 8 }}>
+                  <span className="dropdown">{ valChosen }</span>
+                  <antd.Icon type="down" />
+                </antd.Button>
+              </antd.Dropdown>
+              <antd.Button icon="download" type="primary" style={{ marginLeft:'30px' }} onClick={this.onDownloadSome}>下载</antd.Button>
+              <antd.Button icon="delete" type="primary" style={{ marginLeft:'10px'}} onClick={this.onDeleteSome}>删除</antd.Button>
+            </div>
+            <antd.Table
+              rowSelection={rowSelection}
+              columns={columns}
+              dataSource={this.state.doc}
+              bordered
+              pagination={false}
+              onChange={this.handleTableChange}
+            />
+            <antd.Pagination
+              size="small"
+              current={this.state.pageCurrent}
+              total={this.state.pageTotal}
+              onChange={this.handlePageChange}
+              style={{ margin: '15px 0', textAlign: 'center'}}
+            />
+          </div>
         </div>
       </div>
+
     );
   }
 }

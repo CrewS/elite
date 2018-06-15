@@ -1,7 +1,21 @@
-.header {
+.headerBg {
   height: 60px;
+  width: 100%;
+  margin-bottom: 15px;
   border-bottom: 1px solid #dedede;
   background-color: #fff;
+}
+.header{
+  padding: 16px 10px;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  position: relative;
+}
+.headerLeave{
+  position: absolute;
+  top: 25px;
+  right: 10px;
 }
 .center{
   text-align: center;

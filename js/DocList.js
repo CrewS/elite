@@ -1,4 +1,4 @@
-class SetList extends React.Component {
+class DocList extends React.Component {
   state = {
     docType: ['全部','png', 'gif', 'doc'],
     docCreator: [
@@ -38,7 +38,7 @@ class SetList extends React.Component {
     pageTotal: 50,
     selectRows: null,
   }
-  
+
   // 筛选选择类型
   handleKeyMenuClick = (e) => {
     this.setState({
@@ -62,13 +62,22 @@ class SetList extends React.Component {
     })
   }
 
-  // 页数
-  onChangePage = (page, pageSize) => {
+  // 页数-变更
+  handlePageChange = (page, pageSize) => {
     this.setState({
       pageCurrent: page,
     })
   }
-  
+
+  // 排序-变更
+  handleTableChange = (pagination, filters, sorter) => {
+    console.log(pagination)
+    console.log(filters)
+    console.log(sorter)
+    const order = sorter.order === 'descend' ? '-' : '';
+    const ordering = order + sorter.columnKey;
+  }
+
   // 批量下载
   onDownloadSome = () => {
     console.log(this.state.selectRows)
@@ -117,9 +126,11 @@ class SetList extends React.Component {
     const columns = [{
       title: '文件名称',
       dataIndex: 'name',
+      sorter: true,
     }, {
       title: '文件大小',
       dataIndex: 'size',
+      sorter: true,
     }, {
       title: '类型',
       dataIndex: 'type',
@@ -129,6 +140,7 @@ class SetList extends React.Component {
     }, {
       title: '上传时间',
       dataIndex: 'time',
+      sorter: true,
     }, {
       title: '文件路径',
       dataIndex: 'place',
@@ -143,7 +155,7 @@ class SetList extends React.Component {
       )
     }];
 
-
+    // 选中某列数据
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
         this.setState({
@@ -180,12 +192,13 @@ class SetList extends React.Component {
             dataSource={this.state.doc}
             bordered
             pagination={false}
+            onChange={this.handleTableChange}
           />
           <antd.Pagination
             size="small"
             current={this.state.pageCurrent}
             total={this.state.pageTotal}
-            onChange={this.onChangePage}
+            onChange={this.handlePageChange}
             style={{ margin: '15px 0', textAlign: 'center'}}
           />
         </div>

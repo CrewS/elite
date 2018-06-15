@@ -22,6 +22,18 @@ $shallowgrey: #eaeaea;
     border-right: none;
   }
 }
+.setModal{
+  .ant-table-tbody > tr > td:last-child{
+    border-right:1px solid #e8e8e8;
+  }
+  .ant-table-thead>tr:first-child>th:last-child{
+    border-radius: 0;
+    border-right: 1px solid #e8e8e8;
+  }
+  .ant-input-affix-wrapper .ant-input{
+    min-height: 0;
+  }
+}
 .sethello{
   color: $grey
 }

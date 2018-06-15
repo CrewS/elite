@@ -22,19 +22,45 @@
   const { LocaleProvider, locales } = window.antd;
   const RadioGroup = Radio.Group;
 
-  const mockData = [];
-  for (let i = 0; i < 20; i++) {
-    mockData.push({
-      key: i.toString(),
-      title: `content${i + 1}`,
-      description: `description of content${i + 1}`,
-      disabled: i % 3 < 1,
-    });
-  }
+  // const mockData = [];
+  // for (let i = 0; i < 20; i++) {
+  //   mockData.push({
+  //     key: i.toString(),
+  //     title: `content${i + 1}`,
+  //     // description: `description of content${i + 1}`,
+  //     disabled: i % 3 < 1,
+  //   });
+  // }
 
-  const targetKeys = mockData
-          .filter(item => +item.key % 3 > 1)
-          .map(item => item.key);
+  // const targetKeys = mockData
+  //         .filter(item => +item.key % 3 > 1)
+  //         .map(item => item.key);
+  const mockData = [
+    {
+      key: 1,
+      title: '张三',
+    },
+    {
+      key: 2,
+      title: '李四',
+    },
+    {
+      key: 3,
+      title: '王五',
+    },
+    {
+      key: 4,
+      title: '马六',
+    },
+    {
+      key: 5,
+      title: '赵云',
+      disabled: true,
+    },
+  ]
+  const targetKeys = [
+    5
+  ]
 
   class App extends React.Component {
     state = {
@@ -75,6 +101,7 @@
             onSelectChange={this.handleSelectChange}
             onScroll={this.handleScroll}
             render={item => item.title}
+            listStyle={{width: '240px'}}
           />
         </div>
       );

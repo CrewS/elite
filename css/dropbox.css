@@ -4,7 +4,8 @@
   width: 1175px;
   margin: 0 auto;
   line-height: 32px;
-  margin-top: 30px; }
+  margin-top: 30px;
+  margin-bottom: 10px; }
 
 .dropboxfile {
   max-width: 1175px;
@@ -41,8 +42,19 @@
       .dropboxfile .table-box .list-box .btn-ground {
         margin-bottom: 8px;
         margin-left: 8px; }
+    .dropboxfile .table-box .download-btn {
+      margin-top: 20px;
+      float: left; }
+    .dropboxfile .table-box .listdown .ant-pagination {
+      float: right;
+      margin-top: 20px; }
     .dropboxfile .table-box .btnlist {
-      float: right; }
+      float: right;
+      margin-right: 20px; }
+      .dropboxfile .table-box .btnlist i {
+        margin: 0 5px;
+        font-size: 18px;
+        cursor: pointer; }
 
 /*新建文件夹*/
 .newfile {
@@ -96,5 +108,9 @@
 
 .ant-pagination {
   text-align: center; }
+
+/*显示隐藏*/
+.displaynone {
+  display: none; }
 
 /*# sourceMappingURL=dropbox.css.map */

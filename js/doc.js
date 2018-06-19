@@ -1,4 +1,4 @@
-class DocList extends React.Component {
+class Doc extends React.Component {
   state = {
     docType: ['全部','png', 'gif', 'doc'],
     docCreator: [

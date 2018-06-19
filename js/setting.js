@@ -440,7 +440,7 @@ class Setting extends React.Component {
               </div>
             </div>
           :
-            <DocList goToHome={this.props.goToHome} goToSet={this.showSection.bind(this, 'staff')} />
+            <Doc goToHome={this.props.goToHome} goToSet={this.showSection.bind(this, 'staff')} />
         }
       </div>
     );

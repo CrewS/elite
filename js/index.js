@@ -1,5 +1,6 @@
 
 (function(){
+  const { LocaleProvider, locales } = window.antd;
   class App extends React.Component {
     state = {
       showSection: 'set',
@@ -42,6 +43,6 @@
   }
 
   ReactDOM.render(
-    <App />, document.getElementById('message1')
+    <LocaleProvider locale={locales.zh_CN}><App /></LocaleProvider>, document.getElementById('message1')
   );
 })()

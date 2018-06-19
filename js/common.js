@@ -5,7 +5,7 @@ class Header extends React.Component {
       <div className="header">
         <div className="header-content">
           <div className="header-logo">
-            <i className="iconfont" style={{ color: '#fff', lineHeight: '20px', fontSize:'20px' }}>&#xe65e;</i>
+            <i className="iconfont" style={{ color: '#fff', lineHeight: '20px', fontSize:'22px' }}>&#xe601;</i>
           </div>
           企业网盘
           <div className="link-menu">
@@ -27,7 +27,7 @@ class Capicity extends React.Component{
   componentDidMount() {
     // 请求容量
     this.setState({
-      percent: 0.51,
+      percent: 0.00511,
       used: '100KB',
       total: '10GB'
     })

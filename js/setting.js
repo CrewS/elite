@@ -1,3 +1,4 @@
+const { LocaleProvider, locales } = window.antd;
 class Setting extends React.Component {
   constructor(props){
     super(props);
@@ -5,22 +6,7 @@ class Setting extends React.Component {
   }
 
   state = {
-    managerList: [{
-      name: '张三',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '张三',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '张三',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    }],
+    managerList: [],
     staffList: [{
       name: '1',
       email: '893749234@qq.com',
@@ -127,6 +113,29 @@ class Setting extends React.Component {
     visible: false,
     nomoreStaff: false,
     section: 'staff'
+  }
+
+  componentDidMount() {
+    this.getAdminsList(1, 10)
+  }
+
+  // 获取文件夹管理员列表
+  getAdminsList = (page, page_size) => {
+    $.ajax({
+      xhrFields: {withCredentials: true},
+      type: "get",
+      data: {
+        page: page,
+        page_size: page_size,
+      },
+      url: 'http://weijie.ngrok.elitemc.cn:8000/api/netdisk/admins',
+      success: (res) => {
+        console.log(res)
+        this.setState({
+          managerList: res.results
+        })
+      },
+    })
   }
 
   // 查看文件明细
@@ -274,7 +283,7 @@ class Setting extends React.Component {
     clearInterval(this.timer)
   }
 
-  // 取消添加管理员
+  // 取消弹框
   handleCancel = () => {
     this.setState({
       visible: false,
@@ -293,16 +302,28 @@ class Setting extends React.Component {
   render() {
     const columns = [{
       title: '真实姓名',
-      dataIndex: 'name',
+      dataIndex: 'username',
+      render: (text, record, index) => {
+        return text || '--';
+      },
     }, {
       title: '用户邮箱',
       dataIndex: 'email',
+      render: (text) => {
+        return text || '--';
+      },
     }, {
       title: '手机',
       dataIndex: 'phone',
+      render: (text) => {
+        return text || '--';
+      },
     }, {
       title: '部门',
-      dataIndex: 'place',
+      dataIndex: 'department',
+      render: (text) => {
+        return text || '--';
+      },
     }, {
       title: '操作',
       dataIndex: 'op',
@@ -367,7 +388,6 @@ class Setting extends React.Component {
                   dataSource={this.state.managerList}
                   bordered
                   pagination={false}
-                  size="small"
                 />
                 <antd.Pagination
                   size="small"
@@ -375,6 +395,7 @@ class Setting extends React.Component {
                   total={this.state.pageTotal}
                   onChange={this.handlePageChange}
                   style={{ margin: '15px 0', textAlign: 'center'}}
+                  showSizeChanger
                 />
 
                 {/* 添加文件夹管理员Modal */}

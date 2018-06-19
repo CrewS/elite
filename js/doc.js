@@ -186,7 +186,7 @@ class Doc extends React.Component {
             <div className="setHeaderBtn">
               <Capicity />
             </div>
-        </div>
+          </div>
           <div style={{ border: '1px solid #eaeaea', borderRadius: '5px' }}>
             <div style={{ margin: '10px'}}>
               <antd.Dropdown overlay={keyMenu}>
@@ -218,11 +218,11 @@ class Doc extends React.Component {
               total={this.state.pageTotal}
               onChange={this.handlePageChange}
               style={{ margin: '15px 0', textAlign: 'center'}}
+              showSizeChanger
             />
           </div>
         </div>
       </div>
-
     );
   }
 }

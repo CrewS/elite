@@ -44,7 +44,13 @@ table {
 div,p,span,a{
   font-size:14px;
 }
+.container{
+  width: 100%;
+  max-width: 1180px;
+  margin: 15px auto;
+  padding: 0 15px;
+}
 @import './common.scss';
 @import './share.scss';
 @import './component.scss';
-@import "./set.scss";
+@import "./setting.scss";

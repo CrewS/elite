@@ -40,16 +40,6 @@ class Capicity extends React.Component{
           <antd.Progress percent={percentTage} showInfo={false} />
         </span>
         <span style={{ color: '#6d747f' }}>已用{this.state.used}/共{this.state.total}</span>
-        {
-          this.props.showButton ?
-            <span>
-              <antd.Button type="primary" icon="setting" style={{ margin: '0 10px 0 35px' }}>设置</antd.Button>
-              <antd.Button type="primary" icon="file-text">文件管理</antd.Button>
-            </span>
-          :
-            null
-        }
-
       </span>
     )
   }

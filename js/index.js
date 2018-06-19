@@ -21,7 +21,7 @@
       return (
         <div>
           <Header />
-          <div style={{ width: '1180px', margin: '20px auto' }}>
+          <div className="container">
             {
               (() => {
                 switch (this.state.showSection) {
@@ -29,7 +29,7 @@
                     return <DropBoxFile />
 
                   case 'set':
-                    return <DocList />
+                    return <Setting goToHome={this.goToHome} />
                 }
               })()
 

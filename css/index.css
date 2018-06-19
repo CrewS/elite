@@ -44,6 +44,12 @@ table {
 div, p, span, a {
   font-size: 14px; }
 
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 15px auto;
+  padding: 0 15px; }
+
 .header {
   border-bottom: 1px solid #dedede;
   width: 100%;
@@ -158,6 +164,17 @@ div, p, span, a {
   border-radius: 0; }
 .set tr > th:last-child, .set tr > td:last-child {
   border-right: none; }
+
+.setHeader {
+  position: relative;
+  width: 100%;
+  margin: 20px 0 15px;
+  line-height: 35px; }
+
+.setHeaderBtn {
+  position: absolute;
+  top: 0;
+  right: 0; }
 
 .setModal .ant-table-tbody > tr > td:last-child {
   border-right: 1px solid #e8e8e8; }

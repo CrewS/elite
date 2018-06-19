@@ -166,13 +166,27 @@ class DocList extends React.Component {
 
     return (
       <div>
-        <div style={{ margin: '0 0 15px 175px' }}>
-          <Capicity showButton={true} switchSection={this.props.switchSection} />
-        </div>
+        <antd.Breadcrumb>
+          <antd.Breadcrumb.Item onClick={this.props.goToHome}>
+            <antd.Icon type="home" />
+            <span>首页</span>
+          </antd.Breadcrumb.Item>
+          <antd.Breadcrumb.Item onClick={this.props.goToSet}>
+            <antd.Icon type="user" />
+            <span>网盘设置</span>
+          </antd.Breadcrumb.Item>
+          <antd.Breadcrumb.Item>
+            <antd.Icon type="file-text" />
+            <span>文件明细</span>
+          </antd.Breadcrumb.Item>
+        </antd.Breadcrumb>
         <div className="set">
-          <div style={{ marginBottom: '20px'}}>
-            <antd.Icon type="folder-open" style={{ marginRight: '10px' }}/>管理文件
-          </div>
+          <div className="setHeader">
+            <h1 style={{ fontSize: '16px' }}>文件明细</h1>
+            <div className="setHeaderBtn">
+              <Capicity />
+            </div>
+        </div>
           <div style={{ border: '1px solid #eaeaea', borderRadius: '5px' }}>
             <div style={{ margin: '10px'}}>
               <antd.Dropdown overlay={keyMenu}>

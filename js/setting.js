@@ -109,7 +109,7 @@ class Setting extends React.Component {
       place: '销售部/子部门/子部门/子部门'
     }],
     pageCurrent: 1,
-    pageTotal: 50,
+    pageTotal: 1,
     visible: false,
     nomoreStaff: false,
     section: 'staff'
@@ -130,10 +130,11 @@ class Setting extends React.Component {
       },
       url: 'http://weijie.ngrok.elitemc.cn:8000/api/netdisk/admins',
       success: (res) => {
-        console.log(res)
-        this.setState({
-          managerList: res.results
-        })
+        if (res.code === 20000){
+          this.setState({
+            managerList: res.data.results,
+          })
+        }
       },
     })
   }
@@ -273,6 +274,11 @@ class Setting extends React.Component {
     }, 2000)
   }
 
+  // 弹出移交文件弹框
+  showTransferModal = () => {
+
+  }
+
   // 搜索人员
   onSearchChange = (e) => {
     console.log(e.target.value)
@@ -329,7 +335,7 @@ class Setting extends React.Component {
       dataIndex: 'op',
       render: () => (
         <span>
-          <antd.Icon type="swap" style={{ fontSize: '18px', color: '#0692e1', marginRight: '10px' }} />
+          <antd.Icon type="swap" style={{ fontSize: '18px', color: '#0692e1', marginRight: '10px' }} onClick={this.showTransferModal} />
           <antd.Icon type="delete" style={{ fontSize: '18px', color: '#f74953' }} />
         </span>
       )
@@ -388,6 +394,7 @@ class Setting extends React.Component {
                   dataSource={this.state.managerList}
                   bordered
                   pagination={false}
+                  size="small"
                 />
                 <antd.Pagination
                   size="small"
@@ -432,13 +439,13 @@ class Setting extends React.Component {
 
                 {/* 移交文件：更改文件夹管理员 */}
                 <antd.Modal
-                  title="更改文件夹创建人"
+                  title="转移文件夹给其他文件夹管理员"
                   okText="确定"
                   cancelText="取消"
                   width="800px"
-                  visible={this.state.visible}
-                  onOk={this.handleOk}
-                  onCancel={this.handleCancel}
+                  visible={this.state.visibleTransfer}
+                  onOk={this.handleTransferOk}
+                  onCancel={this.handleTransferCancel}
                   className="setModal"
                   bodyStyle={{height:'500px'}}
                 >

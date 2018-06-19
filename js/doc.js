@@ -211,6 +211,7 @@ class Doc extends React.Component {
               bordered
               pagination={false}
               onChange={this.handleTableChange}
+              size="small"
             />
             <antd.Pagination
               size="small"

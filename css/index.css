@@ -184,11 +184,15 @@ div, p, span, a {
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: text-top; }
-.set .ant-table table {
+.set .ant-table-small {
+  border-radius: 0;
   border-left: none;
-  border-right: none;
-  border-radius: 0; }
-.set tr > th:last-child, .set tr > td:last-child {
+  border-right: none; }
+.set .ant-table-small > .ant-table-content > .ant-table-body > table {
+  padding: 0; }
+.set .ant-table-small.ant-table-bordered .ant-table-content {
+  border-right: none; }
+.set .ant-table-bordered.ant-table-empty .ant-table-placeholder {
   border-right: none; }
 
 .setHeader {
@@ -201,16 +205,5 @@ div, p, span, a {
   position: absolute;
   top: 0;
   right: 0; }
-
-.setModal .ant-table-tbody > tr > td:last-child {
-  border-right: 1px solid #e8e8e8; }
-.setModal .ant-table-thead > tr:first-child > th:last-child {
-  border-radius: 0;
-  border-right: 1px solid #e8e8e8; }
-.setModal .ant-input-affix-wrapper .ant-input {
-  min-height: 0; }
-
-.sethello {
-  color: #101010; }
 
 /*# sourceMappingURL=index.css.map */

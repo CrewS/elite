@@ -2,7 +2,7 @@
 (function(){
   class App extends React.Component {
     state = {
-      showSection: 'set',
+      showSection: 'home',
     }
 
     goToHome = () => {
@@ -17,6 +17,12 @@
       })
     }
 
+    goToNewFile = () => {
+      this.setState({
+        showSection: 'newfile'
+      })
+    }
+
     render() {
       return (
         <div>
@@ -26,10 +32,11 @@
               (() => {
                 switch (this.state.showSection) {
                   case 'home':
-                    return <DropBoxFile />
+                    return <DropBoxFile goToSet={this.goToSet} />
 
                   case 'set':
                     return <Setting goToHome={this.goToHome} />
+
                 }
               })()
 

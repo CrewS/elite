@@ -14,6 +14,7 @@ class DropBoxFile extends React.Component {
     super(props);
     this.state = {
       admins:true,
+      genmulu:true,
       filebox: [
         { key: 1, name: "文件1.doc", size: "5M", user: "Setcina", date: "2018-05-06 9:00",type:"doc"},
         { key: 2, name: "文件2", size: "5M", user: "Mobee", date: "2018-05-06 9:00" },
@@ -23,7 +24,9 @@ class DropBoxFile extends React.Component {
       ],
       nofile:false,
       active: -1,
-      visible: false
+      visible: false,
+      btnGround: false,
+      newFile:true
     };
   }
 
@@ -57,8 +60,30 @@ class DropBoxFile extends React.Component {
     });
   }
 
+  //为空的时候 filebox
+  nullState=()=>{
+    this.setState({
+      filebox:[]
+    })
+  }
+  hasState=()=>{
+    this.setState({
+      filebox:[
+        { key: 1, name: "文件1.doc", size: "5M", user: "Setcina", date: "2018-05-06 9:00",type:"doc"},
+        { key: 2, name: "文件2", size: "5M", user: "Mobee", date: "2018-05-06 9:00" },
+        { key: 3, name: "文件3", size: "5M", user: "Nane", date: "2018-05-06 9:00" },
+        { key: 4, name: "文件4", size: "5M", user: "Exiaer", date: "2018-05-06 9:00" },
+        { key: 5, name: "文件5", size: "5M", user: "X-avir", date: "2018-05-06 9:00" }
+    ]
+    })
+  }
 
-
+  //新建文件夹
+  newFileAble=()=>{
+    this.setState({
+      newFile:false
+    })
+  }
 
 
   render() {
@@ -132,6 +157,17 @@ class DropBoxFile extends React.Component {
         const rowSelection = {
           onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            if(selectedRows.length>0){
+              this.setState({
+                btnGround:true
+              })
+            }
+            else{
+              this.setState({
+                btnGround:false
+              })
+            }
+
           },
           getCheckboxProps: record => ({
             disabled: record.name === 'Disabled User', // Column configuration not to be checked
@@ -143,13 +179,27 @@ class DropBoxFile extends React.Component {
             <div className="table-box">
 
               <div className="btn-ground">
-                <antd.Button type="primary" style={style}>上传</antd.Button>
-                <antd.Button type="primary" style={style} icon="download">新建文件夹</antd.Button>
-                <ButtonGroup>
-                  <antd.Button>编辑</antd.Button>
-                  <antd.Button>移动到</antd.Button>
-                  <antd.Button>删除</antd.Button>
-                </ButtonGroup>
+                {
+                  this.state.genmulu ?
+                  null
+                  :
+                  <antd.Button type="primary" style={style}>上传</antd.Button>
+                }
+
+
+                <antd.Button type="primary" style={style} icon="download" onClick={this.newFileAble}>新建文件夹</antd.Button>
+
+                {
+                  this.state.btnGround ?
+                  <ButtonGroup>
+                    <antd.Button>编辑</antd.Button>
+                    <antd.Button>移动到</antd.Button>
+                    <antd.Button>删除</antd.Button>
+                  </ButtonGroup>
+                  :
+                  null
+                }
+
               </div>
 
               <antd.Table rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false} />
@@ -217,8 +267,13 @@ class DropBoxFile extends React.Component {
         FileBoxIs = (
           <div>
             <div className="table-box">
+              {
+                this.state.genmulu ?
+                  <antd.Table columns={columns} dataSource={data} pagination={false} />
+                :
+                  <antd.Table rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false} />
+              }
 
-              <antd.Table rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false} />
             </div>
             <div className="dropboxfile-footer">
               <antd.Button type="primary" className="btn-left">下载</antd.Button>
@@ -241,33 +296,45 @@ class DropBoxFile extends React.Component {
     //return的jsx
     return (
       <div>
-
+        <Capicity />
         {
           this.state.nofile&&this.state.filebox=="null" ?
-
-            null
-            :
-            <antd.Breadcrumb className="file-breadcrumb">
-              <antd.Breadcrumb.Item><antd.Icon type="home" />首页</antd.Breadcrumb.Item>
-              <antd.Breadcrumb.Item><antd.Icon type="folder" /><a href="">文件夹</a></antd.Breadcrumb.Item>
-            </antd.Breadcrumb>
+          null
+          :
+          <antd.Breadcrumb>
+            <antd.Breadcrumb.Item>
+              <antd.Icon type="home" />
+              <span>首页</span>
+            </antd.Breadcrumb.Item>
+            <antd.Breadcrumb.Item>
+              <antd.Icon type="user" />
+              <span>文件</span>
+            </antd.Breadcrumb.Item>
+          </antd.Breadcrumb>
 
         }
 
-        <div className="dropboxfile">
-          {FileBoxNo}
+        {
+          this.state.newFile ?
+          <div>
+            <button onClick={this.props.goToSet}>设置</button>
+            <div className="dropboxfile">
+              {FileBoxNo}
 
-          {FileBoxIs}
+              {FileBoxIs}
 
-        </div>
+            </div>
 
+            <button onClick={this.changeAdmins}>切换一下非管理员账户</button>
 
+            <button onClick={this.nullState}>切换一下文件为空的情况</button>
+            <button onClick={this.hasState}>切换一下文件不为空的情况</button>
 
+          </div>
+          :
+          <Newfile />
 
-
-        <button onClick={this.changeAdmins}>切换一下非管理员账户</button>
-
-
+        }
       </div>
     )
   }

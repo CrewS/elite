@@ -22,6 +22,17 @@ $shallowgrey: #eaeaea;
     border-right: none;
   }
 }
+.setHeader{
+  position: relative;
+  width: 100%;
+  margin: 20px 0 15px;
+  line-height: 35px;
+}
+.setHeaderBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 .setModal{
   .ant-table-tbody > tr > td:last-child{
     border-right:1px solid #e8e8e8;

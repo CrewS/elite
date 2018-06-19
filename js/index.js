@@ -1,23 +1,40 @@
 
 (function(){
-
   class App extends React.Component {
+    state = {
+      showSection: 'set',
+    }
+
+    goToHome = () => {
+      this.setState({
+        showSection: 'home'
+      })
+    }
+
+    goToSet = () => {
+      this.setState({
+        showSection: 'set'
+      })
+    }
+
     render() {
       return (
         <div>
-          <div>
-            <Header name="123" />
-            <Sidebar name="123" />
-            <Footer name="123" />
-            <div style={{ width: '1180px', margin: '0 auto'}}>
-              {/*
-                <DropBoxFile />
-                <DocList />
-              */}
-              <ManagerList />
-            </div>
+          <Header />
+          <div className="container">
+            {
+              (() => {
+                switch (this.state.showSection) {
+                  case 'home':
+                    return <DropBoxFile />
+
+                  case 'set':
+                    return <Setting goToHome={this.goToHome} />
+                }
+              })()
+
+            }
           </div>
-          <Footer name="123" />
         </div>
       );
     }

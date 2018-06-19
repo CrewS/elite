@@ -1,4 +1,9 @@
-
+.header{
+  border-bottom: 1px solid #dedede;
+  width: 100%;
+  height: 60px;
+  position: relative;
+}
 .center{
   text-align: center;
 }
@@ -7,11 +12,12 @@
   border-bottom: 1px solid #dedede;
   background-color: #fff;
   .header-content{
-    width: 1175px;
+    width: 100%;
+    max-width: 1175px;
     margin: 0 auto;
-    height: 100%;
     line-height: 60px;
     font-size: 20px;
+    padding: 0 20px;
   }
   .header-logo{
     vertical-align: text-bottom;

@@ -1,4 +1,4 @@
-class ManagerList extends React.Component {
+class Setting extends React.Component {
   constructor(props){
     super(props);
     this.timer = null;
@@ -126,6 +126,14 @@ class ManagerList extends React.Component {
     pageTotal: 50,
     visible: false,
     nomoreStaff: false,
+    section: 'staff'
+  }
+
+  // 查看文件明细
+  showSection = (section) => {
+    this.setState({
+      section: section
+    })
   }
 
   // 弹出添加文件管理员弹框
@@ -135,7 +143,6 @@ class ManagerList extends React.Component {
     })
 
     this.timer = setInterval(() => {
-      console.log('timer')
       const parentElemBottom = $('.ant-table-body')[1].getBoundingClientRect().bottom;
       const elems = $('.ant-table-row');
       const elemBottom = elems[elems.length - 1].getBoundingClientRect().bottom;
@@ -331,94 +338,110 @@ class ManagerList extends React.Component {
       },
     };
 
-    const { loading, loadingMore, showLoadingMore} = this.state;
-    const loadMore = showLoadingMore ? (
-      <div style={{ textAlign: 'center', marginTop: 12, height: 32, lineHeight: '32px' }}>
-        {loadingMore && <antd.Spin />}
-        {!loadingMore && <antd.Button onClick={this.onLoadMore}>loading more</antd.Button>}
-      </div>
-    ) : null;
 
     return (
-      <div className="set">
-        <div style={{ marginBottom: '20px'}}>
-          <antd.Icon type="setting" style={{ marginRight: '10px' }}/>网盘设置
+      <div>
+        {/*
+        <div style={{ margin: '0 0 15px 175px' }}>
+          <Capicity showButton={true} switchSection={this.props.switchSection} />
         </div>
-        <div style={{ border: '1px solid #eaeaea', borderRadius: '5px' }}>
-          <div style={{ margin: '10px'}}>
-            <antd.Button icon="plus-square" type="primary" onClick={this.showModal}>添加文件管理员</antd.Button>
-          </div>
-          <antd.Table
-            columns={columns}
-            dataSource={this.state.managerList}
-            bordered
-            pagination={false}
-            size="small"
-          />
-          <antd.Pagination
-            size="small"
-            current={this.state.pageCurrent}
-            total={this.state.pageTotal}
-            onChange={this.handlePageChange}
-            style={{ margin: '15px 0', textAlign: 'center'}}
-          />
+        */}
+        {
+          this.state.section === 'staff' ?
+            <div className="set">
+              <antd.Breadcrumb>
+                <antd.Breadcrumb.Item onClick={this.props.goToHome}>
+                  <antd.Icon type="home" />
+                  <span>首页</span>
+                </antd.Breadcrumb.Item>
+                <antd.Breadcrumb.Item>
+                  <antd.Icon type="user" />
+                  <span>网盘设置</span>
+                </antd.Breadcrumb.Item>
+              </antd.Breadcrumb>
+              <div className="setHeader">
+                <h1 style={{ fontSize: '16px' }}>网盘设置</h1>
+                <antd.Button type="primary" icon="file-text" className="setHeaderBtn" onClick={this.showSection.bind(this, 'doc')}>文件明细</antd.Button>
+              </div>
+              <div style={{ border: '1px solid #eaeaea', borderRadius: '5px' }}>
+                <div style={{ margin: '10px'}}>
+                  <antd.Button icon="plus-square" type="primary" onClick={this.showModal}>添加文件管理员</antd.Button>
+                </div>
+                <antd.Table
+                  columns={columns}
+                  dataSource={this.state.managerList}
+                  bordered
+                  pagination={false}
+                  size="small"
+                />
+                <antd.Pagination
+                  size="small"
+                  current={this.state.pageCurrent}
+                  total={this.state.pageTotal}
+                  onChange={this.handlePageChange}
+                  style={{ margin: '15px 0', textAlign: 'center'}}
+                />
 
-          {/* 添加文件夹管理员Modal */}
-          <antd.Modal
-            title="添加文件夹管理员"
-            okText="确定"
-            cancelText="取消"
-            width="800px"
-            visible={this.state.visible}
-            onOk={this.handleOk}
-            onCancel={this.handleCancel}
-            className="setModal"
-            bodyStyle={{height:'500px'}}
-          >
-            <antd.Input
-              prefix={<antd.Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="请输入真实姓名/用户邮箱/手机/部门"
-              size="default"
-              style={{ marginBottom: '15px' }}
-              onChange={this.onSearchChange}
-            />
-            <antd.Table
-              columns={staffColumns}
-              dataSource={this.state.staffList}
-              bordered
-              pagination={false}
-              rowSelection={rowSelection}
-              scroll={{ y: 350}}
-              size="small"
-              onscroll={this.onscroll}
-            />
-          </antd.Modal>
+                {/* 添加文件夹管理员Modal */}
+                <antd.Modal
+                  title="添加文件夹管理员"
+                  okText="确定"
+                  cancelText="取消"
+                  width="800px"
+                  visible={this.state.visible}
+                  onOk={this.handleOk}
+                  onCancel={this.handleCancel}
+                  className="setModal"
+                  bodyStyle={{height:'500px'}}
+                >
+                  <antd.Input
+                    prefix={<antd.Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    placeholder="请输入真实姓名/用户邮箱/手机/部门"
+                    size="default"
+                    style={{ marginBottom: '15px' }}
+                    onChange={this.onSearchChange}
+                  />
+                  <antd.Table
+                    columns={staffColumns}
+                    dataSource={this.state.staffList}
+                    bordered
+                    pagination={false}
+                    rowSelection={rowSelection}
+                    scroll={{ y: 350}}
+                    size="small"
+                    onscroll={this.onscroll}
+                  />
+                </antd.Modal>
 
 
-          {/* 移交文件：更改文件夹管理员 */}
-          <antd.Modal
-            title="更改文件夹创建人"
-            okText="确定"
-            cancelText="取消"
-            width="800px"
-            visible={this.state.visible}
-            onOk={this.handleOk}
-            onCancel={this.handleCancel}
-            className="setModal"
-            bodyStyle={{height:'500px'}}
-          >
-            <antd.Table
-              columns={staffColumns}
-              dataSource={this.state.staffList}
-              bordered
-              pagination={false}
-              rowSelection={rowSelection}
-              scroll={{ y: 350}}
-              size="small"
-              onscroll={this.onscroll}
-            />
-          </antd.Modal>
-        </div>
+                {/* 移交文件：更改文件夹管理员 */}
+                <antd.Modal
+                  title="更改文件夹创建人"
+                  okText="确定"
+                  cancelText="取消"
+                  width="800px"
+                  visible={this.state.visible}
+                  onOk={this.handleOk}
+                  onCancel={this.handleCancel}
+                  className="setModal"
+                  bodyStyle={{height:'500px'}}
+                >
+                  <antd.Table
+                    columns={staffColumns}
+                    dataSource={this.state.staffList}
+                    bordered
+                    pagination={false}
+                    rowSelection={rowSelection}
+                    scroll={{ y: 350}}
+                    size="small"
+                    onscroll={this.onscroll}
+                  />
+                </antd.Modal>
+              </div>
+            </div>
+          :
+            <DocList goToHome={this.props.goToHome} goToSet={this.showSection.bind(this, 'staff')} />
+        }
       </div>
     );
   }

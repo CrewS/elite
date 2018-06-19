@@ -38,6 +38,12 @@
     }
     .table-box{
         width: 100%;
+        border-left:1px solid #e0e0e0;
+        border-right:1px solid #e0e0e0;
+        .btn-ground{
+          padding: 8px 0;
+          padding-left: 8px;
+        }
         .list-box{
             padding: 8px 0 50px 0;
             border: 1px solid #e0e0e0;
@@ -67,6 +73,17 @@
             }
         }
     }
+
+    .dropboxfile-footer{
+      margin-top: 20px;
+      .btn-left{
+        float: left;
+      }
+      .Pagination-right{
+        float: right;
+      }
+    }
+
 }
 
 

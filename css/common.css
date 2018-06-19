@@ -6,4 +6,38 @@
 .center {
   text-align: center; }
 
+.header .header-content {
+  width: 1175px;
+  margin: 0 auto;
+  height: 100%;
+  line-height: 60px;
+  font-size: 20px; }
+.header .header-logo {
+  vertical-align: text-bottom;
+  height: 32px;
+  width: 32px;
+  margin-right: 10px; }
+.header .link-menu {
+  height: 60px;
+  float: right;
+  font-size: 14px;
+  color: #2e313c;
+  cursor: pointer; }
+
+.footer {
+  height: 80px;
+  width: 100%;
+  min-width: 1366px;
+  position: absolute;
+  bottom: 0;
+  background-color: #fff;
+  border-top: 2px solid #e5e9ed; }
+
+.copyright {
+  color: #656d78;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 23px;
+  line-height: 20px; }
+
 /*# sourceMappingURL=common.css.map */

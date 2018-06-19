@@ -130,7 +130,9 @@
         visible: false,
       });
       $.ajax({
-        url: '/',
+        xhrFields: {withCredentials: true},
+        type: "get",
+        url: 'http://eliteu.ngrok.elitemc.cn/api/netdisk/groups',
         success: function() {
           console.log(123)
         },

@@ -70,31 +70,30 @@ table {
 div, p, span, a {
   font-size: 14px; }
 
+.center {
+  text-align: center; }
+
 .header {
   height: 60px;
   border-bottom: 1px solid #dedede;
   background-color: #fff; }
-
-.center {
-  text-align: center; }
-
-.header .header-content {
-  width: 1175px;
-  margin: 0 auto;
-  height: 100%;
-  line-height: 60px;
-  font-size: 20px; }
-.header .header-logo {
-  vertical-align: text-bottom;
-  height: 32px;
-  width: 32px;
-  margin-right: 10px; }
-.header .link-menu {
-  height: 60px;
-  float: right;
-  font-size: 14px;
-  color: #2e313c;
-  cursor: pointer; }
+  .header .header-content {
+    width: 1175px;
+    margin: 0 auto;
+    height: 100%;
+    line-height: 60px;
+    font-size: 20px; }
+  .header .header-logo {
+    vertical-align: text-bottom;
+    height: 32px;
+    width: 32px;
+    margin-right: 10px; }
+  .header .link-menu {
+    height: 60px;
+    float: right;
+    font-size: 14px;
+    color: #2e313c;
+    cursor: pointer; }
 
 .footer {
   height: 80px;

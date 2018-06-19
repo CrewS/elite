@@ -5,8 +5,9 @@ class DropBoxFile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      admins:true,
       filebox: [
-        { key: 1, name: "文件1", size: "5M", user: "Setcina", date: "2018-05-06 9:00" },
+        { key: 1, name: "文件1.doc", size: "5M", user: "Setcina", date: "2018-05-06 9:00",type:"doc"},
         { key: 2, name: "文件2", size: "5M", user: "Mobee", date: "2018-05-06 9:00" },
         { key: 3, name: "文件3", size: "5M", user: "Nane", date: "2018-05-06 9:00" },
         { key: 4, name: "文件4", size: "5M", user: "Exiaer", date: "2018-05-06 9:00" },
@@ -17,13 +18,19 @@ class DropBoxFile extends React.Component {
     };
   }
 
+  changeAdmins=()=>{
+    this.setState({
+      admins:!this.state.admins
+    })
+
+  }
 
   onmouseenter = (keyId) => {
-
     this.setState({
       active: keyId
     })
   }
+
 
   //model框
   showConfirm = () => {
@@ -46,13 +53,14 @@ class DropBoxFile extends React.Component {
 
 
   render() {
-    var action = "btn-none";
-    //判断文件是否存在
+
+    /*判断文件是否存在开始*/
+    //文件存在
     let FileBoxIs = null;
+    //文件不存在
     let FileBoxNo = null;
 
-    console.log(this.state.active);
-
+    //文件不存在的情况
     if (this.state.filebox == "") {
       FileBoxNo = (
         <div className="isnofile">
@@ -63,13 +71,15 @@ class DropBoxFile extends React.Component {
       )
       FileBoxIs = null;
     }
+    //文件存在的情况
     else {
       const ButtonGroup = antd.Button.Group;
       const style = {
         marginRight: '10px'
       }
       FileBoxNo = null;
-      console.log(this.state.filebox.length)
+
+
       const columns = [{
         title: '文件名',
         dataIndex: 'name',
@@ -83,8 +93,13 @@ class DropBoxFile extends React.Component {
               <span>{text}</span>
               <div className={`btnlist ${this.state.active == id.key ? "" : "active"}`}>
                 <antd.Icon type="edit" />
+                <antd.Icon type="link"
+                  className={
+                    this.state.filebox[id.key-1].key==id.key&&this.state.filebox[id.key-1].type == 'doc' ? '' : 'displaynone'
+                  }
+                  />
                 <antd.Icon type="arrow-right" />
-                <antd.Button onClick={this.showConfirm}>删除</antd.Button>
+                <antd.Icon type="delete" />
               </div>
             </div>
 
@@ -101,10 +116,6 @@ class DropBoxFile extends React.Component {
         dataIndex: 'date',
       }];
       const data = this.state.filebox;
-      this.state.filebox.map(file => {
-        return console.log(file.name);
-
-      })
       // rowSelection object indicates the need for row selection
       const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
@@ -118,26 +129,34 @@ class DropBoxFile extends React.Component {
       FileBoxIs = (
         <div className="table-box">
           <div className="list-box">
-            <div className="btn-ground">
-              <antd.Button type="primary" style={style}>上传</antd.Button>
-              <antd.Button type="primary" style={style} icon="download">新建文件夹</antd.Button>
-              <ButtonGroup>
-                <antd.Button>编辑</antd.Button>
-                <antd.Button>移动到</antd.Button>
-                <antd.Button>删除</antd.Button>
-              </ButtonGroup>
-            </div>
+          {
+             this.state.admins ?
+              <div className="btn-ground">
+                <antd.Button type="primary" style={style}>上传</antd.Button>
+                <antd.Button type="primary" style={style} icon="download">新建文件夹</antd.Button>
+                <ButtonGroup>
+                  <antd.Button>编辑</antd.Button>
+                  <antd.Button>移动到</antd.Button>
+                  <antd.Button>删除</antd.Button>
+                </ButtonGroup>
+              </div>
+            :
+              null
+          }
+
 
             <antd.Table rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false} />
 
           </div>
 
+          <ListDown name001="nihao1" />
 
-          <antd.Pagination size="small" total={50} />
         </div>
       )
     }
 
+
+    //return的jsx
     return (
       <div>
         <antd.Breadcrumb className="file-breadcrumb">
@@ -149,8 +168,13 @@ class DropBoxFile extends React.Component {
           {FileBoxNo}
 
           {FileBoxIs}
-
         </div>
+
+
+
+        <button onClick={this.changeAdmins}>切换一下非管理员账户</button>
+
+
       </div>
     )
   }

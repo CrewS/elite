@@ -4,6 +4,7 @@
   margin: 0 auto;
   line-height: 32px;
   margin-top: 30px;
+  margin-bottom: 10px;
 }
 .dropboxfile{
     max-width: 1175px;
@@ -46,8 +47,24 @@
                 margin-left: 8px;
             }
         }
+        .download-btn{
+          margin-top: 20px;
+          float: left;
+        }
+        .listdown{
+          .ant-pagination{
+            float: right;
+            margin-top: 20px;
+          }
+        }
         .btnlist{
             float: right;
+            margin-right: 20px;
+            i{
+              margin: 0 5px;
+              font-size: 18px;
+              cursor: pointer;
+            }
         }
     }
 }
@@ -124,4 +141,8 @@
 
 .ant-pagination{
     text-align: center;
+}
+/*显示隐藏*/
+.displaynone{
+  display: none;
 }

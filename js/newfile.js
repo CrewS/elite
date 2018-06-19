@@ -218,6 +218,3 @@ class Newfile extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <Newfile />, document.getElementById('message1')
-);

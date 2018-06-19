@@ -15,19 +15,28 @@ class DropBoxFile extends React.Component {
     this.state = {
       admins:true,
       genmulu:true,
-      filebox: [
-        { key: 1, name: "文件1.doc", size: "5M", user: "Setcina", date: "2018-05-06 9:00",type:"doc"},
-        { key: 2, name: "文件2", size: "5M", user: "Mobee", date: "2018-05-06 9:00" },
-        { key: 3, name: "文件3", size: "5M", user: "Nane", date: "2018-05-06 9:00" },
-        { key: 4, name: "文件4", size: "5M", user: "Exiaer", date: "2018-05-06 9:00" },
-        { key: 5, name: "文件5", size: "5M", user: "X-avir", date: "2018-05-06 9:00" }
-      ],
+      fileBox: "",
       nofile:false,
       active: -1,
       visible: false,
       btnGround: false,
       newFile:true
     };
+  }
+
+
+  componentDidMount() {
+    $.ajax({
+      xhrFields: {withCredentials: true},
+      type: "get",
+      url: 'http://0.0.0.0:8000/api/netdisk/files/',
+      success:(res)=>{
+        console.log(res.results);
+        this.setState({
+          fileBox:res.results
+        })
+      }
+    })
   }
 
   changeAdmins=()=>{
@@ -63,12 +72,12 @@ class DropBoxFile extends React.Component {
   //为空的时候 filebox
   nullState=()=>{
     this.setState({
-      filebox:[]
+      fileBox:[]
     })
   }
   hasState=()=>{
     this.setState({
-      filebox:[
+      fileBox:[
         { key: 1, name: "文件1.doc", size: "5M", user: "Setcina", date: "2018-05-06 9:00",type:"doc"},
         { key: 2, name: "文件2", size: "5M", user: "Mobee", date: "2018-05-06 9:00" },
         { key: 3, name: "文件3", size: "5M", user: "Nane", date: "2018-05-06 9:00" },
@@ -98,7 +107,7 @@ class DropBoxFile extends React.Component {
     //判断是管理员以及非管理员
     if(this.state.admins){
       //文件不存在的情况
-      if (this.state.filebox == "") {
+      if (this.state.fileBox == "") {
         FileBoxNo = (
           <div className="isnofile">
             <img src="" />
@@ -121,20 +130,20 @@ class DropBoxFile extends React.Component {
           title: '文件名',
           dataIndex: 'name',
           width: 600,
-          render: (text, id) => {
+          render: (text, record) => {
             return (
               <div
-                onMouseEnter={() => this.onmouseenter(id.key)}
-                data-key={id.key}
+                onMouseEnter={() => this.onmouseenter(record.id)}
+                data-key={record.id}
               >
                 <span>{text}</span>
-                <div className={`btnlist ${this.state.active == id.key ? "" : "active"}`}>
+                <div className={`btnlist ${this.state.active == record.id ? "" : "active"}`}>
                   <antd.Icon type="edit" />
                   <antd.Icon type="link"
-                    className={
-                      this.state.filebox[id.key-1].key==id.key&&this.state.filebox[id.key-1].type == 'doc' ? '' : 'displaynone'
-                    }
-                    />
+                     className={
+                      record.type == 'doc' ? '' : 'displaynone'
+                     }
+                     />
                   <antd.Icon type="arrow-right" />
                   <antd.Icon type="delete" />
                 </div>
@@ -144,15 +153,15 @@ class DropBoxFile extends React.Component {
           },
         }, {
           title: '大小',
-          dataIndex: 'size',
+          dataIndex: 'file_size',
         }, {
           title: '创建人',
-          dataIndex: 'user',
+          dataIndex: 'creator_name',
         }, {
           title: '创建时间',
-          dataIndex: 'date',
+          dataIndex: 'is_shareable',
         }];
-        const data = this.state.filebox;
+        const data = this.state.fileBox;
         // rowSelection object indicates the need for row selection
         const rowSelection = {
           onChange: (selectedRowKeys, selectedRows) => {
@@ -215,7 +224,7 @@ class DropBoxFile extends React.Component {
 
     //非管理员账户
     else{
-      if(this.state.filebox == ""){
+      if(this.state.fileBox == ""){
         FileBoxNo = (
           <div className="isnofile">
             <img src="" />
@@ -253,7 +262,7 @@ class DropBoxFile extends React.Component {
           title: '创建时间',
           dataIndex: 'date',
         }];
-        const data = this.state.filebox;
+        const data = this.state.fileBox;
         // rowSelection object indicates the need for row selection
         const rowSelection = {
           onChange: (selectedRowKeys, selectedRows) => {
@@ -298,7 +307,7 @@ class DropBoxFile extends React.Component {
       <div>
         <Capicity />
         {
-          this.state.nofile&&this.state.filebox=="null" ?
+          this.state.nofile&&this.state.fileBox=="null" ?
           null
           :
           <antd.Breadcrumb>

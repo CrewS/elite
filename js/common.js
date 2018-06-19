@@ -4,11 +4,13 @@ class Header extends React.Component {
     return (
       <div className="header">
         <div className="header-content">
-          <img src="../images/logo.png" className="header-logo" />
+          <div className="header-logo">
+            <i className="iconfont" style={{ color: '#fff', lineHeight: '20px', fontSize:'20px' }}>&#xe65e;</i>
+          </div>
           企业网盘
           <div className="link-menu">
             学习中心
-            <Icon style={{marginLeft:'10px'}} type="solution" />
+            <Icon style={{marginLeft:'10px'}} type="logout" />
           </div>
         </div>
       </div>

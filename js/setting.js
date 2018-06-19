@@ -341,11 +341,6 @@ class Setting extends React.Component {
 
     return (
       <div>
-        {/*
-        <div style={{ margin: '0 0 15px 175px' }}>
-          <Capicity showButton={true} switchSection={this.props.switchSection} />
-        </div>
-        */}
         {
           this.state.section === 'staff' ?
             <div className="set">

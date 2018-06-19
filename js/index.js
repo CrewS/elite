@@ -2,12 +2,12 @@
 (function(){
   class App extends React.Component {
     state = {
-      showSection: 'managerList',
+      showSection: 'set',
     }
 
     goToHome = () => {
       this.setState({
-        showSection: 'dropboxfile'
+        showSection: 'home'
       })
     }
 
@@ -26,10 +26,10 @@
               (() => {
                 switch (this.state.showSection) {
                   case 'home':
-                    return <DropBoxFile switchSection={this.switchSection.bind(this)} />
+                    return <DropBoxFile />
 
                   case 'set':
-                    return <DocList switchSection={this.switchSection.bind(this)} />
+                    return <DocList />
                 }
               })()
 

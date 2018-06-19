@@ -43,8 +43,8 @@ class Capicity extends React.Component{
         {
           this.props.showButton ?
             <span>
-              <antd.Button type="primary" icon="setting" style={{ margin: '0 10px 0 35px' }} onClick={this.props.switchSection.bind(this, 'managerList')}>设置</antd.Button>
-              <antd.Button type="primary" icon="file-text" onClick={this.props.switchSection.bind(this, 'docList')}>文件管理</antd.Button>
+              <antd.Button type="primary" icon="setting" style={{ margin: '0 10px 0 35px' }}>设置</antd.Button>
+              <antd.Button type="primary" icon="file-text">文件管理</antd.Button>
             </span>
           :
             null

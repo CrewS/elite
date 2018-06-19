@@ -44,34 +44,22 @@ table {
 div, p, span, a {
   font-size: 14px; }
 
-.headerBg {
-  height: 60px;
-  width: 100%;
-  margin-bottom: 15px;
-  border-bottom: 1px solid #dedede;
-  background-color: #fff; }
-
 .header {
-  padding: 16px 10px;
+  border-bottom: 1px solid #dedede;
   width: 100%;
-  max-width: 1180px;
-  margin: 0 auto;
+  height: 60px;
   position: relative; }
-
-.headerLeave {
-  position: absolute;
-  top: 25px;
-  right: 10px; }
 
 .center {
   text-align: center; }
 
 .header .header-content {
-  width: 1175px;
+  width: 100%;
+  max-width: 1175px;
   margin: 0 auto;
-  height: 100%;
   line-height: 60px;
-  font-size: 20px; }
+  font-size: 20px;
+  padding: 0 20px; }
 .header .header-logo {
   vertical-align: text-bottom;
   height: 32px;

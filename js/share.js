@@ -243,7 +243,7 @@
     render() {
       // console.log(moment())
       return (
-        <div>
+        <div  className="share-container">
           <Header name="123" />
           <div className="share-content">
             <div className="doc-title">
@@ -281,7 +281,6 @@
             </div>
           </div>
           <Share />
-          <App />
           <Footer name="123" />
         </div>
       );
@@ -291,8 +290,46 @@
 
   class AppMobile extends React.Component {
     render() {
+      const { Button, Input } = antd;
       return (
-        <div>移动端</div>
+        <div>
+          <div className="mobile-header">
+            <img src="../images/logo.png" className="header-logo" />
+            <span>企业网盘</span>
+          </div>
+          {
+            false ?
+              <div className="mobile-wrap">
+                <div className="m-doc-title">
+                  大数据.doc
+                </div>
+                <div className="m-doc-date">
+                  <span>2018-09-30 19:00</span>
+                  <span style={{marginLeft:'12px'}}>实效时间：永久有效</span>
+                </div>
+                <div className="op-container">
+                  {
+                    false ?
+                    <div className="">
+                      <span style={{color:"#2e313c"}}>密码</span> <Input style={{width: '126px',marginLeft:'8px',marginRight:'12px'}} placeholder="请输入密码" type="text" /> <Button type="primary">下载</Button>
+                      <div className="m-error-tips">
+                        密码错误
+                      </div>
+                    </div>
+                    :
+                    <div style={{textAlign:'center'}}>
+                      <Button type="primary">下载</Button>
+                    </div>
+                  }
+                </div>
+              </div>
+            :
+              <div>
+                empty
+              </div>
+
+          }
+        </div>
       );
     }
   }
@@ -303,6 +340,8 @@
       <LocaleProvider locale={locales.zh_CN}><AppPc /></LocaleProvider>, document.getElementById('root')
     );
   } else {
+    // $('html').css({width:'100%'})
+    $('body,html').css({width:'100%','min-width': '320px'})
     ReactDOM.render(
       <AppMobile />, document.getElementById('root')
     );

@@ -9,42 +9,102 @@ class DropBoxFile extends React.Component {
         { key: 4, name: "文件4", size: "5M", user: "Exiaer", date: "2018-05-06 9:00" },
         { key: 5, name: "文件5", size: "5M", user: "X-avir", date: "2018-05-06 9:00" }
    */
+  /**
+   * rootDirectory 是否为根目录的情况
+   * fileBox  存储文件的数组
+   * active 判断鼠标移入移除效果
+   * visible model的显示隐藏
+   * btnGround  按钮的显示隐藏，根据checkoutBox的点击
+   *
+   */
 
   constructor(props) {
     super(props);
     this.state = {
-      admins:true,
-      genmulu:true,
+      admins: true,
+      rootDirectory: true,
       fileBox: "",
-      nofile:false,
       active: -1,
       visible: false,
       btnGround: false,
-      newFile:true
+      newFile: true,
+      breadcrumbs: [],
+      breadcrumbsId: []
     };
   }
 
 
   componentDidMount() {
+
+    //根路径
+    const that = this;
     $.ajax({
       xhrFields: {withCredentials: true},
       type: "get",
       url: 'http://0.0.0.0:8000/api/netdisk/files/',
       success:(res)=>{
-        console.log(res.results);
+        console.log(this)
         this.setState({
-          fileBox:res.results
+          fileBox:res.results,
+          rootDirectory:true,
+          breadcrumbs:[],
+          breadcrumbsId:[]
         })
       }
     })
-  }
 
-  changeAdmins=()=>{
-    this.setState({
-      admins:!this.state.admins
+  }
+  //次级文件夹
+  fileNext = (id,name)=>{
+    $.ajax({
+      xhrFields: {withCredentials: true},
+      type: "get",
+      url: 'http://0.0.0.0:8000/api/netdisk/files/?parent_id='+id+'',
+      success:(res)=>{
+
+        this.setState({
+          fileBox:res.results,
+          rootDirectory:false,
+          breadcrumbs:[...this.state.breadcrumbs,name],
+          breadcrumbsId:[...this.state.breadcrumbsId,id]
+        })
+
+      }
+
     })
-
   }
+  //终极！！！面包屑！！！
+  backFile=(id,name)=>{
+    $.ajax({
+      xhrFields: {withCredentials: true},
+      type: "get",
+      url: 'http://0.0.0.0:8000/api/netdisk/files/?parent_id='+id+'',
+      success:(res)=>{
+
+        var list=this.state.breadcrumbsId;
+        var listName = this.state.breadcrumbs;
+
+        for(var i= 0;i<list.length;i++){
+
+          if(list[i]==id){
+            list.splice(i+1,list.length-1)
+            listName.splice(i+1,listName.length-1)
+          }
+        }
+        this.setState({
+          fileBox:res.results,
+          rootDirectory:false,
+          breadcrumbs:listName,
+          breadcrumbsId:list
+        })
+        console.log(this.state.breadcrumbs)
+        console.log(this.state.breadcrumbsId)
+
+      }
+
+    })
+  }
+
 
   onmouseenter = (keyId) => {
     this.setState({
@@ -69,23 +129,6 @@ class DropBoxFile extends React.Component {
     });
   }
 
-  //为空的时候 filebox
-  nullState=()=>{
-    this.setState({
-      fileBox:[]
-    })
-  }
-  hasState=()=>{
-    this.setState({
-      fileBox:[
-        { key: 1, name: "文件1.doc", size: "5M", user: "Setcina", date: "2018-05-06 9:00",type:"doc"},
-        { key: 2, name: "文件2", size: "5M", user: "Mobee", date: "2018-05-06 9:00" },
-        { key: 3, name: "文件3", size: "5M", user: "Nane", date: "2018-05-06 9:00" },
-        { key: 4, name: "文件4", size: "5M", user: "Exiaer", date: "2018-05-06 9:00" },
-        { key: 5, name: "文件5", size: "5M", user: "X-avir", date: "2018-05-06 9:00" }
-    ]
-    })
-  }
 
   //新建文件夹
   newFileAble=()=>{
@@ -93,6 +136,10 @@ class DropBoxFile extends React.Component {
       newFile:false
     })
   }
+
+
+
+
 
 
   render() {
@@ -110,7 +157,7 @@ class DropBoxFile extends React.Component {
       if (this.state.fileBox == "") {
         FileBoxNo = (
           <div className="isnofile">
-            <img src="" />
+            <img src="./images/none.png" />
             <p>暂无文件</p>
             <antd.Button type="primary">新建文件夹</antd.Button>
           </div>
@@ -125,7 +172,6 @@ class DropBoxFile extends React.Component {
         }
         FileBoxNo = null;
 
-
         const columns = [{
           title: '文件名',
           dataIndex: 'name',
@@ -136,7 +182,7 @@ class DropBoxFile extends React.Component {
                 onMouseEnter={() => this.onmouseenter(record.id)}
                 data-key={record.id}
               >
-                <span>{text}</span>
+                <span className="filename-cp" onClick={this.fileNext.bind(this,record.id,record.name)}>{text}</span>
                 <div className={`btnlist ${this.state.active == record.id ? "" : "active"}`}>
                   <antd.Icon type="edit" />
                   <antd.Icon type="link"
@@ -159,7 +205,7 @@ class DropBoxFile extends React.Component {
           dataIndex: 'creator_name',
         }, {
           title: '创建时间',
-          dataIndex: 'is_shareable',
+          dataIndex: 'created_at',
         }];
         const data = this.state.fileBox;
         // rowSelection object indicates the need for row selection
@@ -189,7 +235,7 @@ class DropBoxFile extends React.Component {
 
               <div className="btn-ground">
                 {
-                  this.state.genmulu ?
+                  this.state.rootDirectory ?
                   null
                   :
                   <antd.Button type="primary" style={style}>上传</antd.Button>
@@ -227,7 +273,7 @@ class DropBoxFile extends React.Component {
       if(this.state.fileBox == ""){
         FileBoxNo = (
           <div className="isnofile">
-            <img src="" />
+            <img src="./images/none.png" />
             <p>暂无文件</p>
           </div>
         )
@@ -277,7 +323,7 @@ class DropBoxFile extends React.Component {
           <div>
             <div className="table-box">
               {
-                this.state.genmulu ?
+                this.state.rootDirectory ?
                   <antd.Table columns={columns} dataSource={data} pagination={false} />
                 :
                   <antd.Table rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false} />
@@ -292,13 +338,12 @@ class DropBoxFile extends React.Component {
 
         )
 
-
-
-
-
-
       }
     }
+
+
+
+
 
 
 
@@ -307,18 +352,26 @@ class DropBoxFile extends React.Component {
       <div>
         <Capicity />
         {
-          this.state.nofile&&this.state.fileBox=="null" ?
+          this.state.fileBox=="null" ?
           null
           :
           <antd.Breadcrumb>
-            <antd.Breadcrumb.Item>
+            <antd.Breadcrumb.Item onClick={this.componentDidMount.bind(this)}>
               <antd.Icon type="home" />
-              <span>首页</span>
+              <span>所有文件</span>
             </antd.Breadcrumb.Item>
-            <antd.Breadcrumb.Item>
-              <antd.Icon type="user" />
-              <span>文件</span>
-            </antd.Breadcrumb.Item>
+
+            {
+            this.state.breadcrumbs.map((breadcrumb,index)=>{
+              return(
+                  <antd.Breadcrumb.Item>
+                    <antd.Icon type="user" />
+                    <span data-key={this.state.breadcrumbsId[index]} onClick={this.backFile.bind(this,this.state.breadcrumbsId[index],breadcrumb)}>{breadcrumb}</span>
+                  </antd.Breadcrumb.Item>
+                )
+              }
+            )
+          }
           </antd.Breadcrumb>
 
         }

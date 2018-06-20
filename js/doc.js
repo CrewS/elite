@@ -36,6 +36,7 @@ class Doc extends React.Component {
     chosenCreatorIndex: 0,
     pageCurrent:1,
     pageTotal: 50,
+    pageSize: 10,
     selectRows: null,
   }
 
@@ -66,6 +67,12 @@ class Doc extends React.Component {
   handlePageChange = (page, pageSize) => {
     this.setState({
       pageCurrent: page,
+    })
+  }
+
+  handlePageSizeChange = (e) => {
+    this.setState({
+      pageSize: e,
     })
   }
 
@@ -187,23 +194,6 @@ class Doc extends React.Component {
               <Capicity />
             </div>
           </div>
-          <div style={{ border: '1px solid #eaeaea', borderRadius: '5px' }}>
-            <div style={{ margin: '10px'}}>
-              <antd.Dropdown overlay={keyMenu}>
-                <antd.Button style={{ marginLeft: 8 }}>
-                  <span className="dropdown">{ this.state.chosenKey === 'type' ? '类型' : '创建人' }</span>
-                  <antd.Icon type="down" />
-                </antd.Button>
-              </antd.Dropdown>
-              <antd.Dropdown overlay={valMenu} width="100px">
-                <antd.Button style={{ marginLeft: 8 }}>
-                  <span className="dropdown">{ valChosen }</span>
-                  <antd.Icon type="down" />
-                </antd.Button>
-              </antd.Dropdown>
-              <antd.Button icon="download" type="primary" style={{ marginLeft:'30px' }} onClick={this.onDownloadSome}>下载</antd.Button>
-              <antd.Button icon="delete" type="primary" style={{ marginLeft:'10px'}} onClick={this.onDeleteSome}>删除</antd.Button>
-            </div>
             <antd.Table
               rowSelection={rowSelection}
               columns={columns}
@@ -212,17 +202,48 @@ class Doc extends React.Component {
               pagination={false}
               onChange={this.handleTableChange}
               size="small"
+              title={() =>
+                <div>
+                  <antd.Dropdown overlay={keyMenu}>
+                    <antd.Button style={{ marginLeft: 8 }}>
+                      <span className="dropdown">{ this.state.chosenKey === 'type' ? '类型' : '创建人' }</span>
+                      <antd.Icon type="down" />
+                    </antd.Button>
+                  </antd.Dropdown>
+                  <antd.Dropdown overlay={valMenu} width="100px">
+                    <antd.Button style={{ marginLeft: 8 }}>
+                      <span className="dropdown">{ valChosen }</span>
+                      <antd.Icon type="down" />
+                    </antd.Button>
+                  </antd.Dropdown>
+                  <antd.Button.Group style={{ marginLeft: '30px', verticalAlign: 'middle', position: 'relative', top: '1px' }}>
+                    <antd.Button onClick={this.onDownloadSome}>下载</antd.Button>
+                    <antd.Button onClick={this.onDeleteSome}>删除</antd.Button>
+                  </antd.Button.Group>
+                </div>
+              }
             />
-            <antd.Pagination
-              size="small"
-              current={this.state.pageCurrent}
-              total={this.state.pageTotal}
-              onChange={this.handlePageChange}
-              style={{ margin: '15px 0', textAlign: 'center'}}
-              showSizeChanger
-            />
+            <div className="page">
+              <antd.Pagination
+                size="small"
+                current={this.state.pageCurrent}
+                total={this.state.pageTotal}
+                onChange={this.handlePageChange}
+                pageSize={this.state.pageSize}
+                className="page-num"
+              />
+              <span className="page-size">
+                每页显示
+                <antd.Select defaultValue="10" size="small" onChange={this.handlePageSizeChange} style={{ margin: '0 5px'}}>
+                  <antd.Select.Option value="10">10</antd.Select.Option>
+                  <antd.Select.Option value="20">20</antd.Select.Option>
+                  <antd.Select.Option value="30">30</antd.Select.Option>
+                  <antd.Select.Option value="50">50</antd.Select.Option>
+                </antd.Select>
+                条
+              </span>
+            </div>
           </div>
-        </div>
       </div>
     );
   }

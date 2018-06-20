@@ -152,7 +152,6 @@ div, p, span, a {
 .footer {
   height: 80px;
   width: 100%;
-  min-width: 1175px;
   position: absolute;
   bottom: 0;
   background-color: #fff;
@@ -211,9 +210,6 @@ div, p, span, a {
     left: 48px;
     margin-top: 8px;
     font-size: 16px; }
-
-html, body {
-  min-width: 1175px; }
 
 .mobile-header {
   height: 60px;

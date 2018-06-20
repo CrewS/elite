@@ -1,29 +1,55 @@
 
 (function(){
-
+  const { LocaleProvider, locales } = window.antd;
   class App extends React.Component {
+    state = {
+      showSection: 'home',
+    }
+
+    goToHome = () => {
+      this.setState({
+        showSection: 'home'
+      })
+    }
+
+    goToSet = () => {
+      this.setState({
+        showSection: 'set'
+      })
+    }
+
+    goToNewFile = () => {
+      this.setState({
+        showSection: 'newfile'
+      })
+    }
+
     render() {
       return (
         <div>
-          <div>
-            <Header name="123" />
-            <Sidebar name="123" />
-            <Footer name="123" />
-            <div style={{ width: '1180px', margin: '0 auto'}}>
-              {/*
-                <DropBoxFile />
-                <DocList />
-              */}
-              <ManagerList />
-            </div>
+          <Header />
+          <div className="container">
+            {
+              (() => {
+                switch (this.state.showSection) {
+                  case 'home':
+                    return <DropBoxFile goToSet={this.goToSet} />
+
+                  case 'set':
+                    return <Setting goToHome={this.goToHome} />
+
+                }
+              })()
+
+            }
           </div>
-          <Footer name="123" />
+          <Footer />
         </div>
       );
     }
   }
 
   ReactDOM.render(
-    <App />, document.getElementById('message1')
+    <LocaleProvider locale={locales.zh_CN}><App /></LocaleProvider>, document.getElementById('message1')
   );
 })()

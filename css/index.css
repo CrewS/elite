@@ -1,78 +1,33 @@
-@charset "UTF-8";
-.set .dropdown {
-  display: inline-block;
-  width: 50px;
-  text-align: left;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  vertical-align: text-top; }
-.set .ant-table table {
-  border-left: none;
-  border-right: none;
-  border-radius: 0; }
-.set tr > th:last-child, .set tr > td:last-child {
-  border-right: none; }
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 20px auto;
+  padding: 0 15px; }
 
-.setModal .ant-table-tbody > tr > td:last-child {
-  border-right: 1px solid #e8e8e8; }
-.setModal .ant-table-thead > tr:first-child > th:last-child {
-  border-radius: 0;
-  border-right: 1px solid #e8e8e8; }
-.setModal .ant-input-affix-wrapper .ant-input {
-  min-height: 0; }
+@font-face {
+  font-family: 'iconfont';
+  /* project id 683888 */
+  src: url("../font/iconfont.eot"), url("../font/iconfont.woff") format("woff"), url("../font/iconfont.ttf") format("truetype"), url("../font/iconfont.svg") format("svg"); }
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale; }
 
-.sethello {
-  color: #101010; }
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden; }
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline; }
-
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block; }
-
-body {
-  line-height: 1; }
-
-ol, ul {
-  list-style: none; }
-
-blockquote, q {
-  quotes: none; }
-
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none; }
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0; }
-
-div, p, span, a {
-  font-size: 14px; }
-
-html, body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,"Helvetica Neue", Helvetica,Tahoma，Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei",SimHei，sans-serif; }
+.header {
+  border-bottom: 1px solid #dedede;
+  width: 100%;
+  height: 60px;
+  position: relative; }
 
 .center {
   text-align: center; }
@@ -87,17 +42,22 @@ html, body {
     z-index: 999;
     background-color: #fff; }
   .header .header-content {
-    width: 1175px;
+    width: 100%;
+    max-width: 1175px;
     margin: 0 auto;
-    height: 60px;
     line-height: 60px;
     font-size: 20px;
-    background: #fff; }
+    padding: 0 20px; }
   .header .header-logo {
+    display: inline-block;
     vertical-align: middle;
     height: 32px;
     width: 32px;
-    margin-right: 10px; }
+    background: #0692e1;
+    border-radius: 32px;
+    padding: 6px;
+    margin-right: 15px;
+    line-height: 20px; }
   .header .logo-text {
     display: inline-block;
     font-size: 20px;
@@ -116,13 +76,13 @@ html, body {
   position: absolute;
   bottom: 0;
   background-color: #fff;
-  border-top: 2px solid #e5e9ed; }
+  border-top: 1px solid #e5e9ed; }
 
 .copyright {
   color: #656d78;
   font-size: 14px;
   text-align: center;
-  margin-top: 23px;
+  margin-top: 28px;
   line-height: 20px; }
 
 #root {
@@ -226,5 +186,35 @@ html, body {
   border: 1px solid #dedede;
   background-color: #fdfdfd;
   margin-top: 20px; }
+
+.set .dropdown {
+  display: inline-block;
+  width: 50px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: text-top; }
+.set .ant-table-small {
+  border-radius: 0;
+  border-left: none;
+  border-right: none; }
+.set .ant-table-small > .ant-table-content > .ant-table-body > table {
+  padding: 0; }
+.set .ant-table-small.ant-table-bordered .ant-table-content {
+  border-right: none; }
+.set .ant-table-bordered.ant-table-empty .ant-table-placeholder {
+  border-right: none; }
+
+.setHeader {
+  position: relative;
+  width: 100%;
+  margin: 20px 0 15px;
+  line-height: 35px; }
+
+.setHeaderBtn {
+  position: absolute;
+  top: 0;
+  right: 0; }
 
 /*# sourceMappingURL=index.css.map */

@@ -1,9 +1,17 @@
-@import "set";
+// @import  "set";
 
 html,body{
   // width: inherit;
   // height: inherit;
 }
+.container{
+  width: 100%;
+  max-width: 1180px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
+
 @import './common.scss';
 @import './share.scss';
 @import './component.scss';
+@import "./setting.scss";

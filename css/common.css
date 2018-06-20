@@ -1,9 +1,82 @@
+@font-face {
+  font-family: 'iconfont';
+  /* project id 683888 */
+  src: url("../font/iconfont.eot"), url("../font/iconfont.woff") format("woff"), url("../font/iconfont.ttf") format("truetype"), url("../font/iconfont.svg") format("svg"); }
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale; }
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden; }
+
 .header {
-  height: 60px;
   border-bottom: 1px solid #dedede;
-  background-color: #fff; }
+  width: 100%;
+  height: 60px;
+  position: relative; }
 
 .center {
   text-align: center; }
+
+.header {
+  height: 60px; }
+  .header .header-wrap {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    border-bottom: 1px solid #dedede;
+    z-index: 999;
+    background-color: #fff; }
+  .header .header-content {
+    width: 100%;
+    max-width: 1175px;
+    margin: 0 auto;
+    line-height: 60px;
+    font-size: 20px;
+    padding: 0 20px; }
+  .header .header-logo {
+    display: inline-block;
+    vertical-align: middle;
+    height: 32px;
+    width: 32px;
+    background: #0692e1;
+    border-radius: 32px;
+    padding: 6px;
+    margin-right: 15px;
+    line-height: 20px; }
+  .header .logo-text {
+    display: inline-block;
+    font-size: 20px;
+    vertical-align: middle; }
+  .header .link-menu {
+    height: 60px;
+    float: right;
+    font-size: 14px;
+    color: #2e313c;
+    cursor: pointer; }
+
+.footer {
+  height: 80px;
+  width: 100%;
+  min-width: 1175px;
+  position: absolute;
+  bottom: 0;
+  background-color: #fff;
+  border-top: 1px solid #e5e9ed; }
+
+.copyright {
+  color: #656d78;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 28px;
+  line-height: 20px; }
 
 /*# sourceMappingURL=common.css.map */

@@ -1,0 +1,41 @@
+$blue: #0692e1;
+$shallowblue: #e6f4fc;
+$grey: #101010;
+$shallowgrey: #eaeaea;
+
+.set{
+  .dropdown{
+    display: inline-block;
+    width: 50px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    vertical-align: text-top;
+  }
+  .ant-table-small{
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  .ant-table-small>.ant-table-content>.ant-table-body>table{
+    padding: 0;
+  }
+  .ant-table-small.ant-table-bordered .ant-table-content{
+    border-right: none;
+  }
+  .ant-table-bordered.ant-table-empty .ant-table-placeholder{
+    border-right: none;
+  }
+}
+.setHeader{
+  position: relative;
+  width: 100%;
+  margin: 20px 0 15px;
+  line-height: 35px;
+}
+.setHeaderBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

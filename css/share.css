@@ -1,6 +1,10 @@
 #root {
-  background: #eeeeee;
+  background: #f5f7fa;
   height: 100%; }
+
+.share-container {
+  min-width: 1175px;
+  width: 100%; }
 
 .share-content {
   width: 800px;
@@ -13,13 +17,13 @@
   box-sizing: border-box;
   padding: 20px; }
   .share-content .doc-title {
-    padding: 10px 0;
+    padding-bottom: 10px;
     border-bottom: 1px solid #dedede;
-    font-size: 26px; }
+    font-size: 16px; }
   .share-content .info-block {
     margin-top: 10px; }
   .share-content .limitTime {
-    margin-left: 12px; }
+    margin-left: 16px; }
   .share-content .content {
     text-align: center; }
   .share-content .download-wrap {
@@ -30,16 +34,56 @@
     position: relative; }
   .share-content .pwdinput {
     width: 100px;
-    margin: 0 12px; }
+    margin-left: 8px;
+    margin-right: 10px; }
   .share-content .on-error {
-    border: 1px solid #de0010; }
+    border: 1px solid #f5222d; }
   .share-content .error-tips {
-    color: #de0010;
+    color: #f5222d;
     position: absolute;
     left: 48px;
     margin-top: 8px;
     font-size: 16px; }
-  .share-content .stss {
+
+html, body {
+  min-width: 1175px; }
+
+.mobile-header {
+  height: 60px;
+  text-align: center;
+  height: 60px;
+  line-height: 60px;
+  font-size: 20px;
+  background: #fff; }
+  .mobile-header .header-logo {
+    vertical-align: middle;
+    height: 32px;
+    width: 32px;
+    margin-right: 10px; }
+  .mobile-header span {
+    display: inline-block;
+    font-size: 20px;
+    vertical-align: middle; }
+
+.mobile-wrap {
+  padding: 0 17px; }
+  .mobile-wrap .m-doc-title {
+    margin-top: 23px;
+    padding-bottom: 8px;
+    font-size: 16px;
+    color: #2e313c;
+    border-bottom: solid 1px #e5e9ed; }
+  .mobile-wrap .m-doc-date {
+    color: #656d78;
+    font-size: 14px;
+    padding-top: 12px; }
+  .mobile-wrap .op-container {
+    margin-top: 32px;
     position: relative; }
+  .mobile-wrap .m-error-tips {
+    position: absolute;
+    top: 42px;
+    left: 40px;
+    color: #f5222d; }
 
 /*# sourceMappingURL=share.css.map */

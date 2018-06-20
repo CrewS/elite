@@ -34,7 +34,12 @@
       display: block;
       margin: 0 auto; }
   .dropboxfile .table-box {
-    width: 100%; }
+    width: 100%;
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0; }
+    .dropboxfile .table-box .btn-ground {
+      padding: 8px 0;
+      padding-left: 8px; }
     .dropboxfile .table-box .list-box {
       padding: 8px 0 50px 0;
       border: 1px solid #e0e0e0;
@@ -55,6 +60,12 @@
         margin: 0 5px;
         font-size: 18px;
         cursor: pointer; }
+  .dropboxfile .dropboxfile-footer {
+    margin-top: 20px; }
+    .dropboxfile .dropboxfile-footer .btn-left {
+      float: left; }
+    .dropboxfile .dropboxfile-footer .Pagination-right {
+      float: right; }
 
 /*新建文件夹*/
 .newfile {

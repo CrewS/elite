@@ -115,9 +115,14 @@
   class Share extends React.Component {
     state = {
       visible: false,
-      resultVisible: false,
+      resultVisible: true,
       type: 1,
       value: 1,
+      shareInfo: {
+        id: '123',
+        share_url: 'shareurl',
+        file_name: 'filename',
+      }
     }
     showModal = () => {
       this.setState({
@@ -129,13 +134,24 @@
       this.setState({
         visible: false,
       });
+      const { message } = antd;
+      message.config({top: 250})
+      const hide = message.loading('Action in progress..', 0);
+      // Dismiss manually and asynchronously
+      setTimeout(hide, 2500);
       $.ajax({
         xhrFields: {withCredentials: true},
         type: "get",
         url: 'http://eliteu.ngrok.elitemc.cn/api/netdisk/groups',
         success: function() {
           console.log(123)
+          this.setState({
+            resultVisible: true,
+          })
         },
+      })
+      this.setState({
+        resultVisible: true,
       })
     }
     handleCancel = (e) => {
@@ -213,10 +229,22 @@
             footer={null}
           >
             <div className="center">
-             <Icon style={{marginRight: '8px', color: '#87d068'}} type="check-circle" />成功创建永久有效加密链接
+             <Icon style={{marginRight: '8px', color: '#87d068'}} type="check-circle" />
+              {
+                (() => {
+                  switch(this.state.value) {
+                    case 1:
+                    return '成功创建永久有效地址';
+                    case 2:
+                    return '成功创建7天有效地址';
+                    case 3:
+                    return '成功创建1天有效地址';
+                  }
+                })()
+              }
             </div>
             <div className="share-content-block">
-              <div>http://xxx/xx/xxx/xxxxxxxxxx</div>
+              <div>{this.state.shareInfo.share_url}</div>
               <div>密码: jpoih</div>
             </div>
             <div className="center">

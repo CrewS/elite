@@ -1,14 +1,103 @@
-// @import  "set";
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
 
-html,body{
-  // width: inherit;
-  // height: inherit;
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+div,p,span,a{
+  font-size:14px;
 }
 .container{
   width: 100%;
   max-width: 1180px;
   margin: 20px auto;
   padding: 0 15px;
+}
+
+// antd 组件样式修改
+// 1. 红色确认框
+.confirm-red {
+  .ant-confirm-body>.anticon{
+    color: #f5222d;
+  }
+  .ant-btn-primary {
+    color: #f5222d;
+    background: #f5f5f5;
+    border-color: #d9d9d9;
+  }
+  .ant-btn-primary:hover{
+    color: #fff;
+    background-color: #ff4d4f;
+    border-color: #ff4d4f;
+  }
+}
+
+// 2. 页码
+.page{
+  margin: 20px 0;
+  position: relative;
+}
+.page{
+  .page-num{
+    text-align: right;
+    padding-right: 160px;
+  }
+  .page-size{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 160px;
+    text-align: right;
+  }
+  .ant-pagination-item-active{
+    background: #0692e1;
+  }
+  .ant-pagination-item-active a{
+    color: #fff;
+  }
+  .ant-pagination.mini .ant-pagination-item{
+    min-width: 22px;
+    height: 22px;
+    line-height: 20px;
+    margin: 0 5px;
+  }
 }
 
 @import './common.scss';

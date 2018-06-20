@@ -13,20 +13,20 @@ $shallowgrey: #eaeaea;
     white-space: nowrap;
     vertical-align: text-top;
   }
-  .ant-table-small{
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-  }
   .ant-table-small>.ant-table-content>.ant-table-body>table{
     padding: 0;
   }
-  .ant-table-small.ant-table-bordered .ant-table-content{
-    border-right: none;
+  .ant-table-small{
+    border-radius: 0;
   }
-  .ant-table-bordered.ant-table-empty .ant-table-placeholder{
-    border-right: none;
+  .ant-table-title{
+    border-radius: 0;
   }
+  .ant-table.ant-table-bordered .ant-table-title{
+    padding-left: 8px
+  }
+
+
 }
 .setHeader{
   position: relative;

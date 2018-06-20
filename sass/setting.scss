@@ -22,6 +22,11 @@ $shallowgrey: #eaeaea;
   .ant-table-title{
     border-radius: 0;
   }
+  .ant-table.ant-table-bordered .ant-table-title{
+    padding-left: 8px
+  }
+
+
 }
 .setHeader{
   position: relative;

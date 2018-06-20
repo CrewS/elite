@@ -1,4 +1,3 @@
-const { LocaleProvider, locales } = window.antd;
 class Setting extends React.Component {
   constructor(props){
     super(props);
@@ -109,7 +108,8 @@ class Setting extends React.Component {
       place: '销售部/子部门/子部门/子部门'
     }],
     pageCurrent: 1,
-    pageTotal: 1,
+    pageTotal: 20,
+    pageSize: 10,
     visible: false,
     visibleTransfer: false,
     nomoreStaff: false,
@@ -148,8 +148,10 @@ class Setting extends React.Component {
     })
   }
 
-  handlePageSizeChange = () => {
-    console.log('pagesizechange')
+  handlePageSizeChange = (e) => {
+    this.setState({
+      pageSize: e,
+    })
   }
 
 
@@ -169,107 +171,109 @@ class Setting extends React.Component {
       if (elemBottom - parentElemBottom < 50) {
         // 请求下一页数据
         console.log('请求下一页数据')
-        const arr = [{
-          name: '1',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '2',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '3',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '4',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '5',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '6',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '7',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '8',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '9',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '10',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '11',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '12',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '13',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '14',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '15',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '16',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '17',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '18',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '19',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        },{
-          name: '20',
-          email: '893749234@qq.com',
-          phone: '384739284',
-          place: '销售部/子部门/子部门/子部门'
-        }];
+        const arr = [
+          {
+            name: '1',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '2',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '3',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '4',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '5',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '6',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '7',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '8',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '9',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '10',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '11',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '12',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '13',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '14',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '15',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '16',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '17',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '18',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '19',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          },{
+            name: '20',
+            email: '893749234@qq.com',
+            phone: '384739284',
+            place: '销售部/子部门/子部门/子部门'
+          }
+        ];
         this.setState({
           staffList: this.state.staffList.concat(arr)
         })
@@ -473,15 +477,16 @@ class Setting extends React.Component {
                   size="small"
                   title={() => <antd.Button icon="plus-square" type="primary" onClick={this.showModal}>添加文件管理员</antd.Button>}
                 />
-                <div>
+                <div className="page">
                   <antd.Pagination
                     size="small"
                     current={this.state.pageCurrent}
                     total={this.state.pageTotal}
                     onChange={this.handlePageChange}
-                    style={{ margin: '15px 0', textAlign: 'center'}}
+                    pageSize={this.state.pageSize}
+                    className="page-num"
                   />
-                  <span>
+                  <span className="page-size">
                     每页显示
                     <antd.Select defaultValue="10" size="small" onChange={this.handlePageSizeChange} style={{ margin: '0 5px'}}>
                       <antd.Select.Option value="10">10</antd.Select.Option>
@@ -491,7 +496,6 @@ class Setting extends React.Component {
                     </antd.Select>
                     条
                   </span>
-
                 </div>
 
 

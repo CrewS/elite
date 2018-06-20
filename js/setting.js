@@ -1,3 +1,4 @@
+const { LocaleProvider, locales } = window.antd;
 class Setting extends React.Component {
   constructor(props){
     super(props);
@@ -5,22 +6,7 @@ class Setting extends React.Component {
   }
 
   state = {
-    managerList: [{
-      name: '张三',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '张三',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '张三',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    }],
+    managerList: [],
     staffList: [{
       name: '1',
       email: '893749234@qq.com',
@@ -123,10 +109,34 @@ class Setting extends React.Component {
       place: '销售部/子部门/子部门/子部门'
     }],
     pageCurrent: 1,
-    pageTotal: 50,
+    pageTotal: 1,
     visible: false,
     nomoreStaff: false,
     section: 'staff'
+  }
+
+  componentDidMount() {
+    this.getAdminsList(1, 10)
+  }
+
+  // 获取文件夹管理员列表
+  getAdminsList = (page, page_size) => {
+    $.ajax({
+      xhrFields: {withCredentials: true},
+      type: "get",
+      data: {
+        page: page,
+        page_size: page_size,
+      },
+      url: 'http://weijie.ngrok.elitemc.cn:8000/api/netdisk/admins',
+      success: (res) => {
+        if (res.code === 20000){
+          this.setState({
+            managerList: res.data.results,
+          })
+        }
+      },
+    })
   }
 
   // 查看文件明细
@@ -264,6 +274,11 @@ class Setting extends React.Component {
     }, 2000)
   }
 
+  // 弹出移交文件弹框
+  showTransferModal = () => {
+
+  }
+
   // 搜索人员
   onSearchChange = (e) => {
     console.log(e.target.value)
@@ -274,7 +289,7 @@ class Setting extends React.Component {
     clearInterval(this.timer)
   }
 
-  // 取消添加管理员
+  // 取消弹框
   handleCancel = () => {
     this.setState({
       visible: false,
@@ -293,22 +308,34 @@ class Setting extends React.Component {
   render() {
     const columns = [{
       title: '真实姓名',
-      dataIndex: 'name',
+      dataIndex: 'username',
+      render: (text, record, index) => {
+        return text || '--';
+      },
     }, {
       title: '用户邮箱',
       dataIndex: 'email',
+      render: (text) => {
+        return text || '--';
+      },
     }, {
       title: '手机',
       dataIndex: 'phone',
+      render: (text) => {
+        return text || '--';
+      },
     }, {
       title: '部门',
-      dataIndex: 'place',
+      dataIndex: 'department',
+      render: (text) => {
+        return text || '--';
+      },
     }, {
       title: '操作',
       dataIndex: 'op',
       render: () => (
         <span>
-          <antd.Icon type="swap" style={{ fontSize: '18px', color: '#0692e1', marginRight: '10px' }} />
+          <antd.Icon type="swap" style={{ fontSize: '18px', color: '#0692e1', marginRight: '10px' }} onClick={this.showTransferModal} />
           <antd.Icon type="delete" style={{ fontSize: '18px', color: '#f74953' }} />
         </span>
       )
@@ -341,11 +368,6 @@ class Setting extends React.Component {
 
     return (
       <div>
-        {/*
-        <div style={{ margin: '0 0 15px 175px' }}>
-          <Capicity showButton={true} switchSection={this.props.switchSection} />
-        </div>
-        */}
         {
           this.state.section === 'staff' ?
             <div className="set">
@@ -380,6 +402,7 @@ class Setting extends React.Component {
                   total={this.state.pageTotal}
                   onChange={this.handlePageChange}
                   style={{ margin: '15px 0', textAlign: 'center'}}
+                  showSizeChanger
                 />
 
                 {/* 添加文件夹管理员Modal */}
@@ -416,13 +439,13 @@ class Setting extends React.Component {
 
                 {/* 移交文件：更改文件夹管理员 */}
                 <antd.Modal
-                  title="更改文件夹创建人"
+                  title="转移文件夹给其他文件夹管理员"
                   okText="确定"
                   cancelText="取消"
                   width="800px"
-                  visible={this.state.visible}
-                  onOk={this.handleOk}
-                  onCancel={this.handleCancel}
+                  visible={this.state.visibleTransfer}
+                  onOk={this.handleTransferOk}
+                  onCancel={this.handleTransferCancel}
                   className="setModal"
                   bodyStyle={{height:'500px'}}
                 >
@@ -440,7 +463,7 @@ class Setting extends React.Component {
               </div>
             </div>
           :
-            <DocList goToHome={this.props.goToHome} goToSet={this.showSection.bind(this, 'staff')} />
+            <Doc goToHome={this.props.goToHome} goToSet={this.showSection.bind(this, 'staff')} />
         }
       </div>
     );

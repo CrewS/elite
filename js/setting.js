@@ -163,6 +163,23 @@ class Setting extends React.Component {
       visible: true,
     })
 
+    // 请求第一页数据
+    $.ajax({
+      xhrFields: {withCredentials: true},
+      url: 'http://weijie.ngrok.elitemc.cn:8000/api/netdisk/admins/',
+      type: "post",
+      data: {
+        user: 1,
+        company: 'weijie'
+      },
+      beforeSend: function(request) {
+        request.setRequestHeader("X-CSRFToken", "OhDPt9uQldp5xJVBX8j6eTCHSPZeRE8Q");
+      },
+      success: (res) => {
+        console.log(res)
+      },
+    })
+
     this.timer = setInterval(() => {
       const parentElemBottom = $('.ant-table-body')[1].getBoundingClientRect().bottom;
       const elems = $('.ant-table-row');
@@ -297,12 +314,15 @@ class Setting extends React.Component {
     clearInterval(this.timer);
     $.ajax({
       xhrFields: {withCredentials: true},
+      url: 'http://weijie.ngrok.elitemc.cn:8000/api/netdisk/admins/',
       type: "post",
       data: {
         user: 1,
         company: 'weijie'
       },
-      url: 'http://weijie.ngrok.elitemc.cn:8000/api/netdisk/admins/',
+      beforeSend: function(request) {
+        request.setRequestHeader("X-CSRFToken", "OhDPt9uQldp5xJVBX8j6eTCHSPZeRE8Q");
+      },
       success: (res) => {
         console.log(res)
       },
@@ -487,7 +507,7 @@ class Setting extends React.Component {
                   bordered
                   pagination={false}
                   size="small"
-                  title={() => <antd.Button icon="plus-square" type="primary" onClick={this.showModal}>添加文件管理员</antd.Button>}
+                  title={() => <antd.Button icon="plus-square" type="primary" onClick={this.showModal}>添加文件夹管理员</antd.Button>}
                 />
                 <div className="page">
                   <antd.Pagination

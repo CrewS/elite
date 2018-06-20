@@ -62,3 +62,21 @@ class Footer extends React.Component {
       </div>);
   }
 }
+
+// ajax请求
+const host_url = 'http://weijie.ngrok.elitemc.cn:8000';
+const host_token = 'OhDPt9uQldp5xJVBX8j6eTCHSPZeRE8Q';
+function ajax(options){
+  $.ajax({
+    xhrFields: {withCredentials: true},
+    url: host_url + options.url,
+    type: "post",
+    data: options.data,
+    beforeSend: function(request) {
+      request.setRequestHeader("X-CSRFToken", host_token);
+    },
+    success: (res) => {
+      options.success(res);
+    }
+  })
+}

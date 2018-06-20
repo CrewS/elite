@@ -50,6 +50,25 @@ div,p,span,a{
   margin: 20px auto;
   padding: 0 15px;
 }
+
+// antd 组件样式修改
+// 红色确认框
+.confirm-red {
+  .ant-confirm-body>.anticon{
+    color: #f5222d;
+  }
+  .ant-btn-primary {
+    color: #f5222d;
+    background: #f5f5f5;
+    border-color: #d9d9d9;
+  }
+  .ant-btn-primary:hover{
+    color: #fff;
+    background-color: #ff4d4f;
+    border-color: #ff4d4f;
+  }
+}
+
 @import './common.scss';
 @import './share.scss';
 @import './component.scss';

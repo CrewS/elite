@@ -130,7 +130,7 @@ class Setting extends React.Component {
         page: page,
         page_size: page_size,
       },
-      url: 'http://weijie.ngrok.elitemc.cn:8000/api/netdisk/admins',
+      url: 'http://weijie.ngrok.elitemc.cn:8000/api/netdisk/admins/',
       success: (res) => {
         if (res.code === 20000){
           this.setState({
@@ -294,7 +294,19 @@ class Setting extends React.Component {
 
   // 2.3 添加人员
   handleOk = () => {
-    clearInterval(this.timer)
+    clearInterval(this.timer);
+    $.ajax({
+      xhrFields: {withCredentials: true},
+      type: "post",
+      data: {
+        user: 1,
+        company: 'weijie'
+      },
+      url: 'http://weijie.ngrok.elitemc.cn:8000/api/netdisk/admins/',
+      success: (res) => {
+        console.log(res)
+      },
+    })
   }
 
   // 2.4 取消弹框

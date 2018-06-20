@@ -11,7 +11,7 @@ class Header extends React.Component {
             <span className="logo-text">企业网盘</span>
             <div className="link-menu">
               学习中心
-              <Icon style={{marginLeft:'10px'}} type="solution" />
+              <i className="iconfont" style={{verticalAlign:'middle', fontSize:'14px',marginLeft: '10px' }}>&#xe62a;</i>
             </div>
           </div>
         </div>

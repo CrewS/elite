@@ -29,8 +29,16 @@
 }
 .header{
   height: 60px;
-  border-bottom: 1px solid #dedede;
-  background-color: #fff;
+  // border-bottom: 1px solid #dedede;
+  // background-color: #fff;
+  .header-wrap{
+    width: 100%;
+    position: fixed;
+    top: 0;
+    border-bottom: 1px solid #dedede;
+    z-index: 999;
+    background-color: #fff;
+  }
   .header-content{
     width: 100%;
     max-width: 1175px;
@@ -41,13 +49,19 @@
   }
   .header-logo{
     display:inline-block;
-    vertical-align: text-bottom;
+    vertical-align: middle;
     height: 32px;
     width: 32px;
     background: #0692e1;
     border-radius: 32px;
     padding: 6px;
     margin-right:15px;
+    line-height: 20px;
+  }
+  .logo-text{
+    display: inline-block;
+    font-size: 20px;
+    vertical-align: middle;
   }
   .link-menu{
     height: 60px;
@@ -60,6 +74,7 @@
 .footer{
   height: 80px;
   width: 100%;
+  min-width: 1175px;
   position: absolute;
   bottom: 0;
   background-color: #fff;
@@ -72,3 +87,4 @@
   margin-top: 28px;
   line-height: 20px;
 }
+

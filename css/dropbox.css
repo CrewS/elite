@@ -13,6 +13,9 @@
   margin: 0 auto;
   overflow: hidden;
   border-top: 1px solid #e0e0e0; }
+  .dropboxfile .filename-cp {
+    cursor: pointer;
+    display: inline-block; }
   .dropboxfile .isnofile {
     width: 140px;
     height: auto;
@@ -20,8 +23,8 @@
     margin-top: 20px;
     padding-bottom: 20px; }
     .dropboxfile .isnofile img {
-      width: 140px;
-      height: 140px;
+      width: 126px;
+      height: 118px;
       display: block;
       vertical-align: top;
       margin: 0 auto; }

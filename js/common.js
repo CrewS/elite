@@ -3,14 +3,16 @@ class Header extends React.Component {
     const { Icon } = antd;
     return (
       <div className="header">
-        <div className="header-content">
+        <div className="header-wrap">
+          <div className="header-content">
           <div className="header-logo">
             <i className="iconfont" style={{ color: '#fff', lineHeight: '20px', fontSize:'22px' }}>&#xe601;</i>
           </div>
-          企业网盘
-          <div className="link-menu">
-            学习中心
-            <Icon style={{marginLeft:'10px'}} type="logout" />
+            <span className="logo-text">企业网盘</span>
+            <div className="link-menu">
+              学习中心
+              <i className="iconfont" style={{verticalAlign:'middle', fontSize:'14px',marginLeft: '10px' }}>&#xe62a;</i>
+            </div>
           </div>
         </div>
       </div>

@@ -53,6 +53,11 @@ div,p,span,a{
 
 // antd 组件样式修改
 // 1. 红色确认框
+$blue: #0692e1;
+$shallowblue: #e6f4fc;
+$grey: #101010;
+$shallowgrey: #eaeaea;
+
 .confirm-red {
   .ant-confirm-body>.anticon{
     color: #f5222d;
@@ -98,6 +103,25 @@ div,p,span,a{
     line-height: 20px;
     margin: 0 5px;
   }
+}
+
+// 3. icon
+.icon-blue, .icon-red{
+  color: #6a727d;
+}
+.icon-blue:hover{
+  color: $blue;
+  cursor: pointer;
+}
+.icon-red:hover{
+  color: #f5222d;
+  cursor: pointer;
+}
+
+// 4. breadcrumb
+.ant-breadcrumb-link:hover{
+  color: $blue;
+  cursor: pointer;
 }
 
 @import './common.scss';

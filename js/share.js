@@ -115,7 +115,7 @@
   class Share extends React.Component {
     state = {
       visible: false,
-      resultVisible: true,
+      resultVisible: false,
       type: 1,
       value: 1,
       shareInfo: {
@@ -309,7 +309,8 @@
             </div>
           </div>
           <Share />
-          <Footer name="123" />
+          <Uploaderbox />
+          <Footer/>
         </div>
       );
     }

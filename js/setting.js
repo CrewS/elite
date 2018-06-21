@@ -5,115 +5,18 @@ class Setting extends React.Component {
   }
 
   state = {
+    loading: true,
+    section: 'staff',
     managerList: [],
-    staffList: [{
-      name: '1',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '2',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '3',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '4',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '5',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '6',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '7',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '8',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '9',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '10',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '11',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '12',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '13',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '14',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '15',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '16',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '17',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '18',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '19',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    },{
-      name: '20',
-      email: '893749234@qq.com',
-      phone: '384739284',
-      place: '销售部/子部门/子部门/子部门'
-    }],
+    staffList: [],
     pageCurrent: 1,
     pageTotal: 20,
     pageSize: 10,
+    staffNomore: false,
+    staffPage: 0,
+    staffText: '',
     visible: false,
     visibleTransfer: false,
-    nomoreStaff: false,
-    section: 'staff'
   }
 
   componentDidMount() {
@@ -123,14 +26,13 @@ class Setting extends React.Component {
   // 1. 文件夹管理员
   // 1.1 文件夹管理员 - 获取列表
   getAdminsList = (page, page_size) => {
-    $.ajax({
-      xhrFields: {withCredentials: true},
+    ajax({
       type: "get",
       data: {
         page: page,
         page_size: page_size,
       },
-      url: 'http://weijie.ngrok.elitemc.cn:8000/api/netdisk/admins/',
+      url: '/api/netdisk/admins/',
       success: (res) => {
         if (res.code === 20000){
           this.setState({
@@ -163,6 +65,9 @@ class Setting extends React.Component {
       visible: true,
     })
 
+    // 请求第一页数据
+    this.getStaffList();
+
     this.timer = setInterval(() => {
       const parentElemBottom = $('.ant-table-body')[1].getBoundingClientRect().bottom;
       const elems = $('.ant-table-row');
@@ -171,115 +76,10 @@ class Setting extends React.Component {
       if (elemBottom - parentElemBottom < 50) {
         // 请求下一页数据
         console.log('请求下一页数据')
-        const arr = [
-          {
-            name: '1',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '2',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '3',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '4',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '5',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '6',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '7',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '8',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '9',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '10',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '11',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '12',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '13',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '14',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '15',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '16',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '17',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '18',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '19',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          },{
-            name: '20',
-            email: '893749234@qq.com',
-            phone: '384739284',
-            place: '销售部/子部门/子部门/子部门'
-          }
-        ];
-        this.setState({
-          staffList: this.state.staffList.concat(arr)
-        })
+
       }
 
-      if (this.state.nomoreStaff) {
+      if (this.state.staffNomore) {
         // 没有更多数据
         clearInterval(this.timer);
       }
@@ -287,35 +87,54 @@ class Setting extends React.Component {
     }, 2000)
   }
 
-  // 2.2 搜索人员
+  // 2.2 获取公司成员列表
+  getStaffList = () => {
+    ajax({
+      url: '/api/netdisk/company/employee/',
+      type: "get",
+      data: {
+        page: this.state.staffPage + 1,
+        page_size: 20,
+        text: this.state.staffText,
+      },
+      success: (res) => {
+        if (res.code === 20000){
+          this.setState({
+            staffList: this.state.staffList.concat(res.data)
+          })
+        }
+
+      },
+    })
+  }
+
+  // 2.3 搜索人员
   onSearchChange = (e) => {
     console.log(e.target.value)
   }
 
-  // 2.3 添加人员
+  // 2.4 添加人员
   handleOk = () => {
     clearInterval(this.timer);
-    $.ajax({
+    ajax({
       xhrFields: {withCredentials: true},
+      url: '/api/netdisk/admins/',
       type: "post",
       data: {
-        user: 1,
-        company: 'weijie'
+        user: 800000192,
       },
-      url: 'http://weijie.ngrok.elitemc.cn:8000/api/netdisk/admins/',
       success: (res) => {
         console.log(res)
       },
     })
   }
 
-  // 2.4 取消弹框
+  // 2.5 取消弹框
   handleCancel = () => {
     this.setState({
       visible: false,
     });
     clearInterval(this.timer);
-
   }
 
 
@@ -377,7 +196,7 @@ class Setting extends React.Component {
     const columns = [{
       title: '真实姓名',
       dataIndex: 'username',
-      render: (text, record, index) => {
+      render: (text) => {
         return text || '--';
       },
     }, {
@@ -401,10 +220,16 @@ class Setting extends React.Component {
     }, {
       title: '操作',
       dataIndex: 'id',
-      render: (text) => (
+      render: (text, record, index) => (
         <span>
-          <antd.Icon type="swap" style={{ fontSize: '18px', color: '#0692e1', marginRight: '10px' }} onClick={this.showTransferModal} />
-          <antd.Icon type="delete" style={{ fontSize: '18px', color: '#f74953' }} onClick={this.deleteAdmins.bind(this, text)} />
+          <antd.Icon type="swap" style={{ fontSize: '18px', marginRight: '10px' }} className="icon-blue" onClick={this.showTransferModal.bind(this, text)} />
+          {
+            record.is_xdmin ?
+              null
+            :
+              <antd.Icon type="delete" style={{ fontSize: '18px', color: '#f74953' }} onClick={this.deleteAdmins.bind(this, text)} />
+          }
+
         </span>
       )
     }];
@@ -412,20 +237,32 @@ class Setting extends React.Component {
     // 所有员工 - 列表头
     const staffColumns = [{
       title: '真实姓名',
-      dataIndex: 'name',
+      dataIndex: 'username',
       width: '115px',
+      render: (text) => {
+        return text || '--';
+      },
     }, {
       title: '用户邮箱',
       dataIndex: 'email',
       width: '180px',
+      render: (text) => {
+        return text || '--';
+      },
     }, {
       title: '手机',
       dataIndex: 'phone',
       width: '145px',
+      render: (text) => {
+        return text || '--';
+      },
     }, {
       title: '部门',
-      dataIndex: 'place',
-      width: '260px'
+      dataIndex: 'department',
+      width: '260px',
+      render: (text) => {
+        return text || '--';
+      },
     }];
 
     // 更改文件夹管理员 - 列表头
@@ -487,7 +324,7 @@ class Setting extends React.Component {
                   bordered
                   pagination={false}
                   size="small"
-                  title={() => <antd.Button icon="plus-square" type="primary" onClick={this.showModal}>添加文件管理员</antd.Button>}
+                  title={() => <antd.Button icon="plus-square" type="primary" onClick={this.showModal}>添加文件夹管理员</antd.Button>}
                 />
                 <div className="page">
                   <antd.Pagination
@@ -521,6 +358,7 @@ class Setting extends React.Component {
                   onOk={this.handleOk}
                   onCancel={this.handleCancel}
                   className="setModal"
+                  destroyOnClose={true}
                   bodyStyle={{height:'500px'}}
                 >
                   <antd.Input
@@ -554,6 +392,7 @@ class Setting extends React.Component {
                   onCancel={this.handleTransferCancel}
                   className="setModal"
                   bodyStyle={{height:'500px'}}
+                  destroyOnClose={true}
                 >
                   <antd.Table
                     columns={transferColumns}

@@ -84,6 +84,21 @@ div, p, span, a {
   line-height: 20px;
   margin: 0 5px; }
 
+.icon-blue, .icon-red {
+  color: #6a727d; }
+
+.icon-blue:hover {
+  color: #0692e1;
+  cursor: pointer; }
+
+.icon-red:hover {
+  color: #f5222d;
+  cursor: pointer; }
+
+.ant-breadcrumb-link:hover {
+  color: #0692e1;
+  cursor: pointer; }
+
 @font-face {
   font-family: 'iconfont';
   /* project id 683888 */

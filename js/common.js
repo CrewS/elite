@@ -64,16 +64,16 @@ class Footer extends React.Component {
 }
 
 // ajax请求
-const host_url = 'http://weijie.ngrok.elitemc.cn:8000';
-const host_token = 'OhDPt9uQldp5xJVBX8j6eTCHSPZeRE8Q';
+const HOST = 'http://weijie.ngrok.elitemc.cn:8000';
+const TOKEN = '7BdppeWIoKWKNhh7I2sDsw4hibRIVgkW';
 function ajax(options){
   $.ajax({
     xhrFields: {withCredentials: true},
-    url: host_url + options.url,
-    type: "post",
+    url: HOST + options.url,
+    type: options.type,
     data: options.data,
     beforeSend: function(request) {
-      request.setRequestHeader("X-CSRFToken", host_token);
+      request.setRequestHeader("X-CSRFToken", TOKEN);
     },
     success: (res) => {
       options.success(res);

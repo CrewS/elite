@@ -232,9 +232,6 @@ html, body {
     margin-top: 8px;
     font-size: 16px; }
 
-html, body {
-  min-width: 1175px; }
-
 .mobile-header {
   height: 60px;
   text-align: center;

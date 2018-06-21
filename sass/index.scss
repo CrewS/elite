@@ -49,6 +49,9 @@ div,p,span,a{
   max-width: 1180px;
   margin: 20px auto;
   padding: 0 15px;
+  .ant-breadcrumb{
+    margin: 20px 0;
+  }
 }
 
 // antd 组件样式修改
@@ -104,3 +107,4 @@ div,p,span,a{
 @import './share.scss';
 @import './component.scss';
 @import "./setting.scss";
+@import "./dropbox.scss";

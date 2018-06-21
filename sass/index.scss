@@ -128,6 +128,20 @@ $shallowgrey: #eaeaea;
   cursor: pointer;
 }
 
+// 5. table-small
+.ant-table-small>.ant-table-content>.ant-table-body>table{
+  padding: 0;
+}
+.ant-table-small{
+  border-radius: 0;
+}
+.ant-table-title{
+  border-radius: 0;
+}
+.ant-table.ant-table-bordered .ant-table-title{
+  padding-left: 8px
+}
+
 @import './common.scss';
 @import './share.scss';
 @import './component.scss';

@@ -121,7 +121,7 @@ class Setting extends React.Component {
       url: '/api/netdisk/admins/',
       type: "post",
       data: {
-        user: 1,
+        user: 800000192,
       },
       success: (res) => {
         console.log(res)

@@ -69,19 +69,22 @@ class Setting extends React.Component {
     this.getStaffList();
 
     this.timer = setInterval(() => {
-      const parentElemBottom = $('.ant-table-body')[1].getBoundingClientRect().bottom;
-      const elems = $('.ant-table-row');
-      const elemBottom = elems[elems.length - 1].getBoundingClientRect().bottom;
+      console.log($('.ant-table-body')[1].getBoundingClientRect())
+      if ($('.ant-table-body')[1]){
+        const parentElemBottom = $('.ant-table-body')[1].getBoundingClientRect().bottom;
+        const elems = $('.ant-table-row');
+        const elemBottom = elems[elems.length - 1].getBoundingClientRect().bottom;
 
-      if (elemBottom - parentElemBottom < 50) {
-        // 请求下一页数据
-        console.log('请求下一页数据')
+        if (elemBottom - parentElemBottom < 50) {
+          // 请求下一页数据
+          console.log('请求下一页数据')
 
-      }
+        }
 
-      if (this.state.staffNomore) {
-        // 没有更多数据
-        clearInterval(this.timer);
+        if (this.state.staffNomore) {
+          // 没有更多数据
+          clearInterval(this.timer);
+        }
       }
 
     }, 2000)

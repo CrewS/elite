@@ -106,14 +106,6 @@ class DropBoxFile extends React.Component {
   }
 
 
-
-  changeAdmins=()=>{
-    this.setState({
-      admins:!this.state.admins
-    })
-
-  }
-
   onmouseenter = (keyId) => {
     this.setState({
       active: keyId
@@ -137,23 +129,6 @@ class DropBoxFile extends React.Component {
     });
   }
 
-  //为空的时候 filebox
-  nullState=()=>{
-    this.setState({
-      fileBox:[]
-    })
-  }
-  hasState=()=>{
-    this.setState({
-      fileBox:[
-        { key: 1, name: "文件1.doc", size: "5M", user: "Setcina", date: "2018-05-06 9:00",type:"doc"},
-        { key: 2, name: "文件2", size: "5M", user: "Mobee", date: "2018-05-06 9:00" },
-        { key: 3, name: "文件3", size: "5M", user: "Nane", date: "2018-05-06 9:00" },
-        { key: 4, name: "文件4", size: "5M", user: "Exiaer", date: "2018-05-06 9:00" },
-        { key: 5, name: "文件5", size: "5M", user: "X-avir", date: "2018-05-06 9:00" }
-    ]
-    })
-  }
 
   //新建文件夹
   newFileAble=()=>{

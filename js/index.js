@@ -3,7 +3,7 @@
   const { LocaleProvider, locales } = window.antd;
   class App extends React.Component {
     state = {
-      showSection: 'set',
+      showSection: 'home',
     }
 
     goToHome = () => {

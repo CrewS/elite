@@ -18,6 +18,7 @@ time, mark, audio, video {
   font: inherit;
   vertical-align: baseline; }
 
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -49,6 +50,9 @@ div,p,span,a{
   max-width: 1180px;
   margin: 20px auto;
   padding: 0 15px;
+  .ant-breadcrumb{
+    margin: 20px 0;
+  }
 }
 
 // antd 组件样式修改
@@ -128,3 +132,4 @@ $shallowgrey: #eaeaea;
 @import './share.scss';
 @import './component.scss';
 @import "./setting.scss";
+@import "./dropbox.scss";

@@ -132,10 +132,6 @@ class Newfile extends React.Component {
     return (
 
       <div className="newfile">
-        <antd.Breadcrumb>
-          <antd.Breadcrumb.Item><a href="">首页</a></antd.Breadcrumb.Item>
-          <antd.Breadcrumb.Item><a href="">新建文件夹</a></antd.Breadcrumb.Item>
-        </antd.Breadcrumb>
         <h3>新建文件夹</h3>
         <div className="file-input-box">
           <antd.Row className="input-row">

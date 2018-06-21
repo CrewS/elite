@@ -15,7 +15,7 @@ class DropBoxFile extends React.Component {
    * active 判断鼠标移入移除效果
    * visible model的显示隐藏
    * btnGround  按钮的显示隐藏，根据checkoutBox的点击
-   *
+   *  btndisplay 按钮显示个数
    */
 
   constructor(props) {
@@ -28,8 +28,16 @@ class DropBoxFile extends React.Component {
       visible: false,
       btnGround: false,
       newFile: true,
+      btndisplay: [],
       breadcrumbs: [],
-      breadcrumbsId: []
+      breadcrumbsId: [],
+      pageCurrent: 1,
+      pageTotal: 20,
+      pageSize: 10,
+      shareFile: true,
+      editFile: true,
+      moveFile: true,
+      deleteFile: true
     };
   }
 
@@ -37,18 +45,20 @@ class DropBoxFile extends React.Component {
   componentDidMount() {
 
     //根路径
-    const that = this;
     $.ajax({
       xhrFields: {withCredentials: true},
       type: "get",
       url: 'http://0.0.0.0:8000/api/netdisk/files/',
+      beforeSend: function(request) {
+        request.setRequestHeader("x-csrftoken", 'xNZm0KMKlVyczQfEHjGDDNJEZIDw4Xzl');
+      },
       success:(res)=>{
-        console.log(this)
         this.setState({
           fileBox:res.results,
           rootDirectory:true,
           breadcrumbs:[],
-          breadcrumbsId:[]
+          breadcrumbsId:[],
+          newFile:true
         })
       }
     })
@@ -73,6 +83,19 @@ class DropBoxFile extends React.Component {
 
     })
   }
+
+  handlePageChange = (page, pageSize) => {
+    this.setState({
+      pageCurrent: page,
+    })
+  }
+
+  handlePageSizeChange = (e) => {
+    this.setState({
+      pageSize: e,
+    })
+  }
+
   //终极！！！面包屑！！！
   backFile=(id,name)=>{
     $.ajax({
@@ -97,8 +120,7 @@ class DropBoxFile extends React.Component {
           breadcrumbs:listName,
           breadcrumbsId:list
         })
-        console.log(this.state.breadcrumbs)
-        console.log(this.state.breadcrumbsId)
+
 
       }
 
@@ -114,17 +136,44 @@ class DropBoxFile extends React.Component {
 
 
   //model框
-  showConfirm = () => {
+
+
+  showDeleteConfirm=(id)=> {
     confirm({
       title: '提示',
-      content: '被删除的文件将无法恢复，确定删除？',
+      content: '被删除的文件无法恢复，确定删除',
       okText: '确定',
+      okType: 'danger',
       cancelText: '取消',
-      onOk: () => {
-        console.log(2);
+      onOk() {
+        $.ajax({
+          xhrFields: {withCredentials: true},
+          type: "post",
+          url: 'http://0.0.0.0:8000/api/netdisk/files/'+id+'',
+          headers: {
+            "x-csrftoken": 'xNZm0KMKlVyczQfEHjGDDNJEZIDw4Xzl',
+          },
+          // beforeSend: function(request) {
+          //   request.setRequestHeader("x-csrftoken", 'xNZm0KMKlVyczQfEHjGDDNJEZIDw4Xzl');
+          // },
+          success:(res)=>{
+
+            console.log("111")
+            // this.setState({
+            //   fileBox:res.results,
+            //   rootDirectory:false,
+            //   breadcrumbs:listName,
+            //   breadcrumbsId:list
+            // })
+          },
+          error:()=>{
+            console.log("222")
+          }
+
+        })
       },
       onCancel() {
-        console.log(1);
+        console.log('Cancel');
       },
     });
   }
@@ -150,6 +199,7 @@ class DropBoxFile extends React.Component {
     let FileBoxIs = null;
     //文件不存在
     let FileBoxNo = null;
+    var Btndisplay= null;
 
     //判断是管理员以及非管理员
     if(this.state.admins){
@@ -173,6 +223,7 @@ class DropBoxFile extends React.Component {
         FileBoxNo = null;
 
         const columns = [{
+          filterIcon: <antd.Icon type="smile-o" style={{ color: this.state.filtered ? '#000' : '#000' }} />,
           title: '文件名',
           dataIndex: 'name',
           width: 600,
@@ -180,8 +231,9 @@ class DropBoxFile extends React.Component {
             return (
               <div
                 onMouseEnter={() => this.onmouseenter(record.id)}
-                data-key={record.id}
+                key={record.id}
               >
+                <i className="iconfont" style={{color:'#40a9ff',marginRight:'18px'}}>&#xe60f;</i>
                 <span className="filename-cp" onClick={this.fileNext.bind(this,record.id,record.name)}>{text}</span>
                 <div className={`btnlist ${this.state.active == record.id ? "" : "active"}`}>
                   <antd.Icon type="edit" />
@@ -191,7 +243,7 @@ class DropBoxFile extends React.Component {
                      }
                      />
                   <antd.Icon type="arrow-right" />
-                  <antd.Icon type="delete" />
+                  <antd.Icon type="delete" onClick={this.showDeleteConfirm.bind(this,record.id)}/>
                 </div>
               </div>
 
@@ -209,19 +261,61 @@ class DropBoxFile extends React.Component {
         }];
         const data = this.state.fileBox;
         // rowSelection object indicates the need for row selection
+        //const that =this
         const rowSelection = {
           onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-            if(selectedRows.length>0){
+            // console.log(selectedRows.length);
+            selectedRows.map(selectedRow=>{
+              //return selectedRow.id
+              //console.log(selectedRow.file_type)
+              // this.setState({
+              //   btndisplay:[...this.state.btndisplay,selectedRow.id]
+              // })
+            })
+
+            //console.log(this.state.btndisplay)
+            console.log(this.state.fileBox.length);
+
+            if(selectedRows.length>0&&selectedRows.length<=1){
               this.setState({
-                btnGround:true
+                btnGround:true,
+                shareFile: true,
+                editFile: true,
+                moveFile: true,
+                deleteFile: true
               })
             }
+            else if(selectedRows.length=0){
+              this.setState({
+                btnGround:false,
+                shareFile: false,
+                editFile: false,
+                moveFile: false,
+                deleteFile: false
+              })
+            }
+
+            else if(selectedRows.length>1&&selectedRows.length<this.state.fileBox.length){
+              this.setState({
+                btnGround:true,
+                shareFile: false,
+                editFile: false,
+                moveFile: false,
+                deleteFile: true
+              })
+            }
+
             else{
               this.setState({
-                btnGround:false
+                btnGround:true,
+                shareFile: false,
+                editFile: false,
+                moveFile: false,
+                deleteFile: true
               })
             }
+
 
           },
           getCheckboxProps: record => ({
@@ -229,6 +323,8 @@ class DropBoxFile extends React.Component {
             name: record.name,
           }),
         };
+
+
         FileBoxIs = (
           <div>
             <div className="table-box">
@@ -244,27 +340,28 @@ class DropBoxFile extends React.Component {
 
                 <antd.Button type="primary" style={style} icon="download" onClick={this.newFileAble}>新建文件夹</antd.Button>
 
+
                 {
                   this.state.btnGround ?
-                  <ButtonGroup>
-                    <antd.Button>编辑</antd.Button>
-                    <antd.Button>移动到</antd.Button>
-                    <antd.Button>删除</antd.Button>
-                  </ButtonGroup>
+                  <antd.Button.Group>
+                    <antd.Button className={this.state.editFile ? '' : 'displaynone'}>编辑</antd.Button>
+                    <antd.Button className={this.state.shareFile ? '' : 'displaynone'}>分享</antd.Button>
+                    <antd.Button className={this.state.moveFile ? '' : 'displaynone'}>移动到</antd.Button>
+                    <antd.Button className={this.state.deleteFile ? '' : 'displaynone'} onClick={this.showDeleteConfirm}>删除</antd.Button>
+                  </antd.Button.Group>
                   :
                   null
                 }
 
-              </div>
 
+              </div>
               <antd.Table rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false} />
-            </div>
-            <div className="dropboxfile-footer">
-              <antd.Pagination className="Pagination-right" size="small" total={50} showSizeChanger showQuickJumper />
             </div>
           </div>
 
         )
+
+
       }
     }
 
@@ -294,6 +391,7 @@ class DropBoxFile extends React.Component {
           render: (text, id) => {
             return (
               <div data-key={id.key}>
+
                 <span>{text}</span>
               </div>
             )
@@ -326,25 +424,17 @@ class DropBoxFile extends React.Component {
                 this.state.rootDirectory ?
                   <antd.Table columns={columns} dataSource={data} pagination={false} />
                 :
-                  <antd.Table rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false} />
+                  <antd.Table rowSelection={this.rowSelection} columns={columns} dataSource={data} pagination={false} />
               }
 
             </div>
-            <div className="dropboxfile-footer">
-              <antd.Button type="primary" className="btn-left">下载</antd.Button>
-              <antd.Pagination className="Pagination-right" size="small" total={50} showSizeChanger/>
-            </div>
+
           </div>
 
         )
 
       }
     }
-
-
-
-
-
 
 
     //return的jsx
@@ -384,6 +474,58 @@ class DropBoxFile extends React.Component {
               {FileBoxNo}
 
               {FileBoxIs}
+
+              {
+                this.state.admins ?
+                <div className="dropboxfile-footer">
+
+                  <div className="page">
+                      <antd.Pagination
+                        size="small"
+                        current={this.state.pageCurrent}
+                        total={this.state.pageTotal}
+                        onChange={this.handlePageChange}
+                        pageSize={this.state.pageSize}
+                        className="page-num"
+                      />
+                      <span className="page-size">
+                        每页显示
+                        <antd.Select defaultValue="10" size="small" onChange={this.handlePageSizeChange} style={{ margin: '0 5px'}}>
+                          <antd.Select.Option value="10">10</antd.Select.Option>
+                          <antd.Select.Option value="20">20</antd.Select.Option>
+                          <antd.Select.Option value="30">30</antd.Select.Option>
+                          <antd.Select.Option value="50">50</antd.Select.Option>
+                        </antd.Select>
+                        条
+                      </span>
+                  </div>
+                </div>
+                :
+                <div className="dropboxfile-footer">
+                  <antd.Button type="primary" className="btn-left">下载</antd.Button>
+                  <div className="page">
+                      <antd.Pagination
+                        size="small"
+                        current={this.state.pageCurrent}
+                        total={this.state.pageTotal}
+                        onChange={this.handlePageChange}
+                        pageSize={this.state.pageSize}
+                        className="page-num"
+                      />
+                      <span className="page-size">
+                        每页显示
+                        <antd.Select defaultValue="10" size="small" onChange={this.handlePageSizeChange} style={{ margin: '0 5px'}}>
+                          <antd.Select.Option value="10">10</antd.Select.Option>
+                          <antd.Select.Option value="20">20</antd.Select.Option>
+                          <antd.Select.Option value="30">30</antd.Select.Option>
+                          <antd.Select.Option value="50">50</antd.Select.Option>
+                        </antd.Select>
+                        条
+                      </span>
+                  </div>
+                </div>
+              }
+
 
             </div>
 

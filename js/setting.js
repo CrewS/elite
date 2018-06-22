@@ -10,33 +10,41 @@ class Setting extends React.Component {
     managerList: [],
     staffList: [],
     pageCurrent: 1,
-    pageTotal: 20,
+    pageTotal: null,
     pageSize: 10,
-    staffNomore: false,
-    staffPage: 0,
-    staffText: '',
-    visible: false,
-    visibleTransfer: false,
+    staff: {
+      nomore: false,
+      page: 0,
+      text: '',
+      chosen: [],
+      visible: false,
+    },
+    trans: {
+      id:'',
+      toId: '',
+      visible: false,
+    },
   }
 
   componentDidMount() {
-    this.getAdminsList(1, 10)
+    this.getAdminsList()
   }
 
   // 1. 文件夹管理员
   // 1.1 文件夹管理员 - 获取列表
-  getAdminsList = (page, page_size) => {
+  getAdminsList = () => {
     ajax({
       type: "get",
       data: {
-        page: page,
-        page_size: page_size,
+        page: this.state.pageCurrent,
+        page_size: this.state.pageSize,
       },
       url: '/api/netdisk/admins/',
       success: (res) => {
         if (res.code === 20000){
           this.setState({
             managerList: res.data.results,
+            pageTotal: res.data.count,
           })
         }
       },
@@ -44,7 +52,7 @@ class Setting extends React.Component {
   }
 
   // 1.2 文件夹管理员 - 页码变更
-  handlePageChange = (page, pageSize) => {
+  handlePageChange = (page) => {
     this.setState({
       pageCurrent: page,
     })
@@ -62,32 +70,17 @@ class Setting extends React.Component {
   // 2.1 弹出弹框
   showModal = () => {
     this.setState({
-      visible: true,
+      staff: {
+        nomore: false,
+        page: 0,
+        text: '',
+        chosen: [],
+        visible: true,
+      }
     })
 
     // 请求第一页数据
     this.getStaffList();
-
-    this.timer = setInterval(() => {
-      console.log($('.ant-table-body')[1].getBoundingClientRect())
-      if ($('.ant-table-body')[1]){
-        const parentElemBottom = $('.ant-table-body')[1].getBoundingClientRect().bottom;
-        const elems = $('.ant-table-row');
-        const elemBottom = elems[elems.length - 1].getBoundingClientRect().bottom;
-
-        if (elemBottom - parentElemBottom < 50) {
-          // 请求下一页数据
-          console.log('请求下一页数据')
-
-        }
-
-        if (this.state.staffNomore) {
-          // 没有更多数据
-          clearInterval(this.timer);
-        }
-      }
-
-    }, 2000)
   }
 
   // 2.2 获取公司成员列表
@@ -96,17 +89,37 @@ class Setting extends React.Component {
       url: '/api/netdisk/company/employee/',
       type: "get",
       data: {
-        page: this.state.staffPage + 1,
+        page: this.state.staff.page + 1,
         page_size: 20,
-        text: this.state.staffText,
+        text: this.state.staff.text,
       },
       success: (res) => {
         if (res.code === 20000){
           this.setState({
-            staffList: this.state.staffList.concat(res.data)
-          })
-        }
+            staffList: this.state.staffList.concat(res.data.results)
+          });
 
+
+          if (this.state.staff.page === 0){
+            this.timer = setInterval(() => {
+              const parentElemBottom = $('.ant-table-body')[1].getBoundingClientRect().bottom;
+              const elems = $('.ant-table-row');
+              const elemBottom = elems[elems.length - 1].getBoundingClientRect().bottom;
+
+              if (elemBottom - parentElemBottom < 50) {
+                // 请求下一页数据
+                console.log('请求下一页数据')
+
+              }
+
+              if (this.state.staff.nomore) {
+                // 没有更多数据
+                clearInterval(this.timer);
+              }
+
+            }, 2000)
+          }
+        }
       },
     })
   }
@@ -118,16 +131,22 @@ class Setting extends React.Component {
 
   // 2.4 添加人员
   handleOk = () => {
+    // 批量添加文件夹管理员
+    // user: JSON.stringify(this.state.trans.chosen)
     clearInterval(this.timer);
     ajax({
       xhrFields: {withCredentials: true},
       url: '/api/netdisk/admins/',
       type: "post",
       data: {
-        user: 800000192,
+        user: this.state.trans.chosen[0],
       },
       success: (res) => {
-        console.log(res)
+        if (res.code === 20000){
+          this.getAdminsList();
+          this.handleCancel();
+          antd.message.success('添加成功');
+        }
       },
     })
   }
@@ -135,7 +154,13 @@ class Setting extends React.Component {
   // 2.5 取消弹框
   handleCancel = () => {
     this.setState({
-      visible: false,
+      staff: {
+        nomore: false,
+        page: 0,
+        text: '',
+        chosen: [],
+        visible: false,
+      }
     });
     clearInterval(this.timer);
   }
@@ -144,21 +169,39 @@ class Setting extends React.Component {
 
   // 3. 移交文件
   // 3.1 弹出弹框
-  showTransferModal = () => {
+  showTransferModal = (text) => {
+    console.log(text)
     this.setState({
-      visibleTransfer: true,
+      trans: {
+        visible: true,
+        id: text,
+        toId: '',
+      }
     })
   }
 
   // 3.2 确定移交
   handleTransferOk = () => {
-
+    console.log(this.state.trans)
+    ajax({
+      url: '/api/netdisk/admins/transfer/',
+      type: 'post',
+      data: {
+        "action": 'move',
+        "old_fileadmin_id": this.state.trans.id,
+        "new_fileadmin_id": this.state.trans.toId
+      }
+    })
   }
 
   // 3.3 取消弹框
   handleTransferCancel = () => {
     this.setState({
-      visibleTransfer: false,
+      trans: {
+        visible: false,
+        id: '',
+        toId: '',
+      }
     })
   }
 
@@ -173,15 +216,27 @@ class Setting extends React.Component {
       className: 'confirm-red',
       onOk: () => {
         // 删除管理员
-        if (false) {
-          antd.message.success('删除成功');
-        } else {
-          antd.Modal.warning({
-            title: '提示',
-            content: '删除失败！请先把文件夹管理员的文件移交给其他人',
-            okText: '确定',
-          })
-        }
+        ajax({
+          url: '/api/netdisk/admins/range/',
+          type: 'post',
+          data: JSON.stringify({
+            method: "DELETE",
+            admin_ids: [id]
+          }),
+          success: (res) => {
+            if (res.code === 20000) {
+              this.getAdminsList();
+              antd.message.success('删除成功');
+            } else {
+              antd.Modal.warning({
+                title: '提示',
+                content: '删除失败！请先把文件夹管理员的文件移交给其他人',
+                okText: '确定',
+              })
+            }
+          }
+        })
+
       }
     });
 
@@ -225,12 +280,12 @@ class Setting extends React.Component {
       dataIndex: 'id',
       render: (text, record, index) => (
         <span>
-          <antd.Icon type="swap" style={{ fontSize: '18px', marginRight: '10px' }} className="icon-blue" onClick={this.showTransferModal.bind(this, text)} />
+          <antd.Icon type="swap" style={{ fontSize: '18px', margin: '0 15px 0 5px' }} className="icon-blue" onClick={this.showTransferModal.bind(this, text)} />
           {
             record.is_xdmin ?
               null
             :
-              <antd.Icon type="delete" style={{ fontSize: '18px', color: '#f74953' }} onClick={this.deleteAdmins.bind(this, text)} />
+              <antd.Icon type="delete" style={{ fontSize: '18px' }} className="icon-red" onClick={this.deleteAdmins.bind(this, text)} />
           }
 
         </span>
@@ -270,34 +325,64 @@ class Setting extends React.Component {
 
     // 更改文件夹管理员 - 列表头
     const transferColumns = [{
-      title: '',
-      dataIndex: 'id',
-      width: '60px',
-      render: (text) => (
-        <span style={{ textAlign: 'center' }}><antd.Radio></antd.Radio></span>
-      )
-    }, {
       title: '真实姓名',
       dataIndex: 'username',
       width: '115px',
+      render: (text) => {
+        return text || '--';
+      },
     }, {
       title: '用户邮箱',
       dataIndex: 'email',
       width: '175px',
+      render: (text) => {
+        return text || '--';
+      },
     }, {
       title: '手机',
       dataIndex: 'phone',
       width: '145px',
+      render: (text) => {
+        return text || '--';
+      },
     }, {
       title: '部门',
       dataIndex: 'department',
-      width: '260px'
+      width: '260px',
+      render: (text) => {
+        return text || '--';
+      },
     }];
 
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        const arr = [];
+        for( let i = 0; i < selectedRows.length; i++){
+          arr.push(selectedRows[i].user)
+        }
+        const { trans } = this.state;
+        trans.chosen = arr;
+        this.setState({
+          trans
+        });
       },
+      getCheckboxProps: record => ({
+        disabled: record.is_file_admin,
+      }),
+    };
+
+    const transferRowSelection = {
+      type: 'radio',
+      onChange: (selectedRowKeys, selectedRows) => {
+        const { trans } = this.state;
+        trans.toId = selectedRows[0].id;
+        this.setState({
+          trans,
+        })
+      },
+      getCheckboxProps: record => ({
+        disabled: record.id === this.state.trans.id, // Column configuration not to be checked
+      }),
     };
 
 
@@ -357,7 +442,7 @@ class Setting extends React.Component {
                   okText="确定"
                   cancelText="取消"
                   width="800px"
-                  visible={this.state.visible}
+                  visible={this.state.staff.visible}
                   onOk={this.handleOk}
                   onCancel={this.handleCancel}
                   className="setModal"
@@ -379,7 +464,6 @@ class Setting extends React.Component {
                     rowSelection={rowSelection}
                     scroll={{ y: 350}}
                     size="small"
-                    onscroll={this.onscroll}
                   />
                 </antd.Modal>
 
@@ -390,7 +474,7 @@ class Setting extends React.Component {
                   okText="确定"
                   cancelText="取消"
                   width="800px"
-                  visible={this.state.visibleTransfer}
+                  visible={this.state.trans.visible}
                   onOk={this.handleTransferOk}
                   onCancel={this.handleTransferCancel}
                   className="setModal"
@@ -399,12 +483,12 @@ class Setting extends React.Component {
                 >
                   <antd.Table
                     columns={transferColumns}
+                    rowSelection={transferRowSelection}
                     dataSource={this.state.managerList}
                     bordered
                     pagination={false}
                     scroll={{ y: 350}}
                     size="small"
-                    onscroll={this.onscroll}
                   />
                 </antd.Modal>
               </div>

@@ -69,6 +69,7 @@ class Footer extends React.Component {
 
 const HOST = 'http://leseil.ngrok.elitemc.cn';
 const TOKEN = '5E0P1QjdUEdVGuBBzPMie3z6Vgq5dUB0'
+
 function ajax(options){
   $.ajax({
     xhrFields: {withCredentials: true},

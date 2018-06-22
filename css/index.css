@@ -410,6 +410,15 @@ html, body {
     margin-bottom: 20px; }
     .newfile .input-row div:nth-of-type(1) {
       line-height: 32px; }
+    .newfile .input-row div:nth-of-type(1).noline-height {
+      line-height: 20px; }
+    .newfile .input-row .share-mt {
+      margin-top: 4px;
+      overflow: hidden; }
+      .newfile .input-row .share-mt span {
+        float: left; }
+      .newfile .input-row .share-mt span:nth-of-type(2) {
+        margin-top: 4px; }
   .newfile .ant-radio-wrapper {
     margin-bottom: 10px; }
   .newfile .ant-btn {

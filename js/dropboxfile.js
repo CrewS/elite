@@ -37,7 +37,9 @@ class DropBoxFile extends React.Component {
       shareFile: true,
       editFile: true,
       moveFile: true,
-      deleteFile: true
+      deleteFile: true,
+      allDeleteFileId:'',
+      editNewFileId:''
     };
   }
 
@@ -49,9 +51,6 @@ class DropBoxFile extends React.Component {
       xhrFields: {withCredentials: true},
       type: "get",
       url: 'http://0.0.0.0:8000/api/netdisk/files/',
-      beforeSend: function(request) {
-        request.setRequestHeader("x-csrftoken", 'xNZm0KMKlVyczQfEHjGDDNJEZIDw4Xzl');
-      },
       success:(res)=>{
         this.setState({
           fileBox:res.results,
@@ -137,42 +136,95 @@ class DropBoxFile extends React.Component {
 
   //model框
 
-
-  showDeleteConfirm=(id)=> {
+  //删除当个文件开始
+  showDeleteConfirm =(id)=> {
     confirm({
       title: '提示',
       content: '被删除的文件无法恢复，确定删除',
       okText: '确定',
       okType: 'danger',
       cancelText: '取消',
-      onOk() {
+      onOk:()=> {
         $.ajax({
           xhrFields: {withCredentials: true},
-          type: "post",
-          url: 'http://0.0.0.0:8000/api/netdisk/files/'+id+'',
-          headers: {
-            "x-csrftoken": 'xNZm0KMKlVyczQfEHjGDDNJEZIDw4Xzl',
+          type: "delete",
+          url: 'http://0.0.0.0:8000/api/netdisk/files/'+id+'/',
+          beforeSend: function(request) {
+            request.setRequestHeader("X-CSRFToken", 'qOUymbjJNxi1zVI82ZsS60FVuShDFRxR');
           },
-          // beforeSend: function(request) {
-          //   request.setRequestHeader("x-csrftoken", 'xNZm0KMKlVyczQfEHjGDDNJEZIDw4Xzl');
-          // },
           success:(res)=>{
+            const newFileBox = [...this.state.fileBox]
+            //循环后splice对应的ID值
+            for (var i = newFileBox.length-1; i>=0; i--){
+              if (newFileBox[i].id==id)
+              newFileBox.splice(i,1);
+            }
 
-            console.log("111")
-            // this.setState({
-            //   fileBox:res.results,
-            //   rootDirectory:false,
-            //   breadcrumbs:listName,
-            //   breadcrumbsId:list
-            // })
+            console.log(newFileBox);
+
+            this.setState({
+              fileBox:newFileBox
+            })
           },
           error:()=>{
-            console.log("222")
+            console.log(id)
           }
 
         })
       },
-      onCancel() {
+      onCancel:()=>  {
+        console.log('Cancel');
+      },
+    });
+  }
+
+  //批量操作
+  allDeleteConfirm =(idArry)=>{
+    confirm({
+      title: '提示',
+      content: '被删除的文件无法恢复，确定删除',
+      okText: '确定',
+      okType: 'danger',
+      cancelText: '取消',
+      onOk:()=> {
+        $.ajax({
+          xhrFields: {withCredentials: true},
+          type: "post",
+          url: 'http://0.0.0.0:8000/api/netdisk/files/bulk/',
+          action:'delete',
+          data: {
+            action:'delete',
+            file_ids: JSON.stringify(idArry)
+          },
+          beforeSend: function(request) {
+            request.setRequestHeader("X-CSRFToken", 'qOUymbjJNxi1zVI82ZsS60FVuShDFRxR');
+          },
+          success:(res)=>{
+
+            const newFileBox = [...this.state.fileBox]
+
+            for(var i=0;i<newFileBox.length;i++){
+              for(var j=0;j<idArry.length;j++){
+                if(newFileBox[i].id==idArry[j]){
+                  newFileBox.splice(i,1);
+                }
+              }
+            }
+            alert(1)
+
+            this.setState({
+              fileBox:newFileBox
+            })
+
+            console.log(idArry);
+          },
+          error:()=>{
+            console.log(22222222);
+          }
+
+        })
+      },
+      onCancel:()=>  {
         console.log('Cancel');
       },
     });
@@ -231,7 +283,7 @@ class DropBoxFile extends React.Component {
             return (
               <div
                 onMouseEnter={() => this.onmouseenter(record.id)}
-                key={record.id}
+                data-key={record.id}
               >
                 <i className="iconfont" style={{color:'#40a9ff',marginRight:'18px'}}>&#xe60f;</i>
                 <span className="filename-cp" onClick={this.fileNext.bind(this,record.id,record.name)}>{text}</span>
@@ -266,16 +318,14 @@ class DropBoxFile extends React.Component {
           onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             // console.log(selectedRows.length);
+            const fileListId = []
             selectedRows.map(selectedRow=>{
-              //return selectedRow.id
-              //console.log(selectedRow.file_type)
-              // this.setState({
-              //   btndisplay:[...this.state.btndisplay,selectedRow.id]
-              // })
+              return fileListId.push(selectedRow.id)
+            })
+            this.setState({
+              allDeleteFileId:fileListId
             })
 
-            //console.log(this.state.btndisplay)
-            console.log(this.state.fileBox.length);
 
             if(selectedRows.length>0&&selectedRows.length<=1){
               this.setState({
@@ -347,7 +397,7 @@ class DropBoxFile extends React.Component {
                     <antd.Button className={this.state.editFile ? '' : 'displaynone'}>编辑</antd.Button>
                     <antd.Button className={this.state.shareFile ? '' : 'displaynone'}>分享</antd.Button>
                     <antd.Button className={this.state.moveFile ? '' : 'displaynone'}>移动到</antd.Button>
-                    <antd.Button className={this.state.deleteFile ? '' : 'displaynone'} onClick={this.showDeleteConfirm}>删除</antd.Button>
+                    <antd.Button className={this.state.deleteFile ? '' : 'displaynone'} onClick={this.allDeleteConfirm.bind(this,this.state.allDeleteFileId)}>删除</antd.Button>
                   </antd.Button.Group>
                   :
                   null
@@ -440,6 +490,7 @@ class DropBoxFile extends React.Component {
     //return的jsx
     return (
       <div>
+
         <Capicity />
         {
           this.state.fileBox=="null" ?
@@ -536,7 +587,7 @@ class DropBoxFile extends React.Component {
 
           </div>
           :
-          <Newfile />
+          <Newfile id={this.state.editNewFileId} />
 
         }
       </div>

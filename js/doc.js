@@ -1,36 +1,8 @@
 class Doc extends React.Component {
   state = {
-    docType: ['全部','png', 'gif', 'doc'],
-    docCreator: [
-      {id: 'all', name: '全部'},
-      {id: '1', name:'周晓明'},
-      {id: '2', name: '王小明福克斯的理论思考了付款链接都是王小明福克斯的理论思考了付款链接都是'}
-    ],
-    doc: [{
-      key: '1',
-      name: '浏览器截图_2018',
-      size: '23.8KB',
-      type: 'png',
-      creator: '周某',
-      time: '2018-09-07 12:00',
-      place: '销售部/学习资料/2018/讲座'
-    },{
-      key: '2',
-      name: '浏览器截图_2018',
-      size: '23.8KB',
-      type: 'png',
-      creator: '周某',
-      time: '2018-09-07 12:00',
-      place: '销售部/学习资料/2018/讲座'
-    },{
-      key: '3',
-      name: '浏览器截图_2018',
-      size: '23.8KB',
-      type: 'png',
-      creator: '周某',
-      time: '2018-09-07 12:00',
-      place: '销售部/学习资料/2018/讲座'
-    }],
+    docType: [],
+    docCreator: [],
+    doc: [],
     chosenKey: 'type',
     chosenTypeIndex: 0,
     chosenCreatorIndex: 0,
@@ -40,6 +12,46 @@ class Doc extends React.Component {
     selectRows: null,
   }
 
+  //
+  componentDidMount() {
+    // 获取所有文件的所有类型和创建人
+    ajax({
+      url: '/api/netdisk/filestype/',
+      type: 'get',
+      success: (res) => {
+        if (res.code === 20000){
+          this.setState({
+            docType: res.data.file_type,
+            docCreator: res.data.user_info
+          })
+        }
+      }
+    })
+
+    this.getDocList()
+  }
+
+  // 获取文件明细
+  getDocList = () => {
+    ajax({
+      url: '/api/netdisk/filesdetail/',
+      data: {
+        page: 1,
+        page_size: 10,
+      },
+      success: (res) => {
+        console.log(res)
+        this.setState({
+          doc: res.results
+        })
+        if (res.code === 20000){
+          this.setState({
+            doc: res.data.results
+          })
+        }
+      }
+    })
+  }
   // 筛选选择类型
   handleKeyMenuClick = (e) => {
     this.setState({
@@ -135,26 +147,26 @@ class Doc extends React.Component {
       dataIndex: 'name',
     }, {
       title: '文件大小',
-      dataIndex: 'size',
+      dataIndex: 'file_size',
     }, {
       title: '类型',
-      dataIndex: 'type',
+      dataIndex: 'file_type',
     }, {
       title: '创建人',
-      dataIndex: 'creator',
+      dataIndex: 'creator_name',
     }, {
       title: '上传时间',
-      dataIndex: 'time',
+      dataIndex: 'created_at',
     }, {
       title: '文件路径',
-      dataIndex: 'place',
+      dataIndex: 'file_path',
     }, {
       title: '操作',
       dataIndex: 'op',
       render: () => (
         <span>
-          <antd.Icon type="download" style={{ fontSize: '18px', color: '#0692e1', marginRight: '10px' }} />
-          <antd.Icon type="delete" style={{ fontSize: '18px', color: '#f74953' }} />
+          <antd.Icon type="download" style={{ fontSize: '18px', marginRight: '10px' }} className="icon-blue" />
+          <antd.Icon type="delete" style={{ fontSize: '18px' }} className="icon-red" />
         </span>
       )
     }];

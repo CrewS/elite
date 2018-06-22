@@ -19,6 +19,7 @@ class Header extends React.Component {
     );
   }
 }
+
 class Capicity extends React.Component{
   state = {
     percent: null,
@@ -28,11 +29,18 @@ class Capicity extends React.Component{
 
   componentDidMount() {
     // 请求容量
-    this.setState({
-      percent: 0.00511,
-      used: '100KB',
-      total: '10GB'
+    ajax({
+      url: '/api/netdisk/space',
+      type: 'get',
+      success: (res) => {
+        this.setState({
+          percent: res.data.rate,
+          used: res.data.used_space,
+          total: res.data.total_space
+        });
+      }
     })
+
   }
 
   render() {
@@ -64,15 +72,26 @@ class Footer extends React.Component {
 }
 
 // ajax请求
+
+// weijie
 // const HOST = 'http://weijie.ngrok.elitemc.cn:8000';
 // const TOKEN = '7BdppeWIoKWKNhh7I2sDsw4hibRIVgkW';
 
+// zhenwei
 const HOST = 'http://leseil.ngrok.elitemc.cn';
 const TOKEN = '5E0P1QjdUEdVGuBBzPMie3z6Vgq5dUB0'
+
+// yongzhao
+// const HOST = 'http://eliteu.ngrok.elitemc.cn';
+// const TOKEN = 'OasFesFpFLSa4BEqEQ3l0PE0xnjGWNUH';
+
+// beta
+
 function ajax(options){
   $.ajax({
     xhrFields: {withCredentials: true},
     url: HOST + options.url,
+    crossDomain: true,
     type: options.type,
     data: options.data,
     beforeSend: function(request) {
@@ -82,6 +101,10 @@ function ajax(options){
       options.success(res);
     }
   })
-  // contentType: "application/json; charset=utf-8",
-  // dataType: "json",
+  /*
+
+  */
+ //
+// contentType: "application/json; charset=utf-8",
+// dataType: "json",
 }

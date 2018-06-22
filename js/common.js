@@ -64,16 +64,12 @@ class Footer extends React.Component {
 }
 
 // ajax请求
-<<<<<<< HEAD
-const HOST = '0.0.0.0:8000';
-const TOKEN = 'q0Bl1YuoYsu4aN9Yi4fXMnm8lglORtJA';
-=======
 // const HOST = 'http://weijie.ngrok.elitemc.cn:8000';
 // const TOKEN = '7BdppeWIoKWKNhh7I2sDsw4hibRIVgkW';
 
 const HOST = 'http://leseil.ngrok.elitemc.cn';
 const TOKEN = '5E0P1QjdUEdVGuBBzPMie3z6Vgq5dUB0'
->>>>>>> master
+
 function ajax(options){
   $.ajax({
     xhrFields: {withCredentials: true},

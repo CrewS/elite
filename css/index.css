@@ -102,6 +102,18 @@ div, p, span, a {
   color: #0692e1;
   cursor: pointer; }
 
+.ant-table-small > .ant-table-content > .ant-table-body > table {
+  padding: 0; }
+
+.ant-table-small {
+  border-radius: 0; }
+
+.ant-table-title {
+  border-radius: 0; }
+
+.ant-table.ant-table-bordered .ant-table-title {
+  padding-left: 8px; }
+
 html, body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,"Helvetica Neue", Helvetica,Tahoma，Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei",SimHei，sans-serif; }
 
@@ -296,14 +308,6 @@ html, body {
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: text-top; }
-.set .ant-table-small > .ant-table-content > .ant-table-body > table {
-  padding: 0; }
-.set .ant-table-small {
-  border-radius: 0; }
-.set .ant-table-title {
-  border-radius: 0; }
-.set .ant-table.ant-table-bordered .ant-table-title {
-  padding-left: 8px; }
 
 .setHeader {
   position: relative;
@@ -410,6 +414,15 @@ html, body {
     margin-bottom: 20px; }
     .newfile .input-row div:nth-of-type(1) {
       line-height: 32px; }
+    .newfile .input-row div:nth-of-type(1).noline-height {
+      line-height: 20px; }
+    .newfile .input-row .share-mt {
+      margin-top: 4px;
+      overflow: hidden; }
+      .newfile .input-row .share-mt span {
+        float: left; }
+      .newfile .input-row .share-mt span:nth-of-type(2) {
+        margin-top: 4px; }
   .newfile .ant-radio-wrapper {
     margin-bottom: 10px; }
   .newfile .ant-btn {

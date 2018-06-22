@@ -183,6 +183,15 @@ class Setting extends React.Component {
   // 3.2 确定移交
   handleTransferOk = () => {
     console.log(this.state.trans)
+    ajax({
+      url: '/api/netdisk/admins/transfer/',
+      type: 'post',
+      data: {
+        "action": 'move',
+        "old_fileadmin_id": this.state.trans.id,
+        "new_fileadmin_id": this.state.trans.toId
+      }
+    })
   }
 
   // 3.3 取消弹框
@@ -210,12 +219,10 @@ class Setting extends React.Component {
         ajax({
           url: '/api/netdisk/admins/range/',
           type: 'post',
-          data: {
+          data: JSON.stringify({
             method: "DELETE",
             admin_ids: [id]
-          },
-          contentType: "application/json; charset=utf-8",
-          dataType: "json",
+          }),
           success: (res) => {
             if (res.code === 20000) {
               this.getAdminsList();

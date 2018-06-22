@@ -74,12 +74,12 @@ class Footer extends React.Component {
 // ajax请求
 
 // weijie
-// const HOST = 'http://weijie.ngrok.elitemc.cn:8000';
-// const TOKEN = '7BdppeWIoKWKNhh7I2sDsw4hibRIVgkW';
+const HOST = 'http://weijie.ngrok.elitemc.cn:8000';
+const TOKEN = 'IffeBMFGApA5lAjRLi7Ftfxw06vMG3zZ';
 
 // zhenwei
-const HOST = 'http://leseil.ngrok.elitemc.cn';
-const TOKEN = '5E0P1QjdUEdVGuBBzPMie3z6Vgq5dUB0'
+// const HOST = 'http://leseil.ngrok.elitemc.cn';
+// const TOKEN = '5E0P1QjdUEdVGuBBzPMie3z6Vgq5dUB0'
 
 // yongzhao
 // const HOST = 'http://eliteu.ngrok.elitemc.cn';
@@ -94,6 +94,8 @@ function ajax(options){
     crossDomain: true,
     type: options.type,
     data: options.data,
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
     beforeSend: function(request) {
       request.setRequestHeader("X-CSRFToken", TOKEN);
     },
@@ -105,6 +107,5 @@ function ajax(options){
 
   */
  //
-// contentType: "application/json; charset=utf-8",
-// dataType: "json",
+//
 }

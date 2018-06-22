@@ -136,11 +136,12 @@ class Setting extends React.Component {
     clearInterval(this.timer);
     ajax({
       xhrFields: {withCredentials: true},
-      url: '/api/netdisk/admins/',
+      url: '/api/netdisk/admins/range/',
       type: "post",
-      data: {
-        user: this.state.trans.chosen[0],
-      },
+      data: JSON.stringify({
+        method: 'CREATE',
+        user_ids:this.state.trans.chosen,
+      }),
       success: (res) => {
         if (res.code === 20000){
           this.getAdminsList();

@@ -157,6 +157,9 @@ class Doc extends React.Component {
     }, {
       title: '上传时间',
       dataIndex: 'created_at',
+      render: (text) => {
+        return moment(text).format("YYYY-MM-DD hh:mm")
+      }
     }, {
       title: '文件路径',
       dataIndex: 'file_path',

@@ -115,13 +115,10 @@
   class Share extends React.Component {
     state = {
       visible: false,
-      resultVisible: true,
+      resultVisible: false,
       type: 1,
-      value: 1,
+      value: 0,
       shareInfo: {
-        id: '123',
-        share_url: 'shareurl',
-        file_name: 'filename',
       }
     }
     showModal = () => {
@@ -138,20 +135,33 @@
       message.config({top: 250})
       const hide = message.loading('Action in progress..', 0);
       // Dismiss manually and asynchronously
-      setTimeout(hide, 2500);
+      // setTimeout(hide, 2500);
       $.ajax({
         xhrFields: {withCredentials: true},
-        type: "get",
-        url: 'http://eliteu.ngrok.elitemc.cn/api/netdisk/groups',
-        success: function() {
-          console.log(123)
-          this.setState({
-            resultVisible: true,
-          })
+        type: "post",
+        url: 'http://sodaling.ngrok.elitemc.cn:8000/api/netdisk/sharefile/',
+        headers:{
+          'X-CSRFToken': '5KoBDnI9wtHTcqz64brDbQN1MQ3yPUVm'
         },
-      })
-      this.setState({
-        resultVisible: true,
+        data: {
+          expire_at: this.state.value,
+          cloud_file: 1,
+          type: this.state.type,
+        },
+        success: (res) => {
+          console.log(123)
+          if (res.code === 20000){
+            this.setState({
+              shareInfo: res.data,
+            })
+          }
+          hide();
+          setTimeout(() => {
+            this.setState({
+              resultVisible: true,
+            })
+          }, 500);
+        },
       })
     }
     handleCancel = (e) => {
@@ -208,16 +218,16 @@
             <div>
               <span className="radio-item">分享形式</span>
               <RadioGroup onChange={this.onChangeType} value={this.state.type}>
-                <Radio style={radioStyle} value={1}>加密 <span style={{ color: '#dedede' }}>需要密码才能下载</span></Radio>
-                <Radio style={radioStyle} value={2}>公开 <span style={{ color: '#dedede' }}>任何人都可以下载</span></Radio>
+                <Radio style={radioStyle} value={0}>加密 <span style={{ color: '#dedede' }}>需要密码才能下载</span></Radio>
+                <Radio style={radioStyle} value={1}>公开 <span style={{ color: '#dedede' }}>任何人都可以下载</span></Radio>
               </RadioGroup>
             </div>
             <div style={{ marginTop: '10px' }}>
               <span className="radio-item">有效期</span>
               <RadioGroup onChange={this.onChangeValue} value={this.state.value}>
-                <Radio style={radioStyle} value={1}>永久有效</Radio>
-                <Radio style={radioStyle} value={2}>7天</Radio>
-                <Radio style={radioStyle} value={3}>1天</Radio>
+                <Radio style={radioStyle} value={0}>永久有效</Radio>
+                <Radio style={radioStyle} value={7}>7天</Radio>
+                <Radio style={radioStyle} value={1}>1天</Radio>
               </RadioGroup>
             </div>
           </Modal>
@@ -233,11 +243,11 @@
               {
                 (() => {
                   switch(this.state.value) {
-                    case 1:
+                    case 0:
                     return '成功创建永久有效地址';
-                    case 2:
+                    case 7:
                     return '成功创建7天有效地址';
-                    case 3:
+                    case 1:
                     return '成功创建1天有效地址';
                   }
                 })()
@@ -245,11 +255,20 @@
             </div>
             <div className="share-content-block">
               <div>{this.state.shareInfo.share_url}</div>
-              <div>密码: jpoih</div>
+              {
+                this.state.type === 0 &&
+                  <div>密码: {this.state.shareInfo.password}</div>
+
+              }
             </div>
             <div className="center">
               <Button type="primary" style={{marginTop: '20px',cursor: 'pointer'}}>
-                复制链接及密码
+                {
+                  this.state.type === 0  ?
+                    '复制链接及密码'
+                    :
+                    '复制链接'
+                }
               </Button>
             </div>
           </Modal>
@@ -261,38 +280,124 @@
   class AppPc extends React.Component {
     state = {
       onerror: 0,
+      detail: {},
+    }
+    // cons
+    componentDidMount(){
+      this.getPageDetail();
+    }
+    inputOnchange = (e) => {
+      console.log(e.target.value)
+      this.setState({
+        password: e.target.value,
+      })
+      // this.password = value
     }
     checkpassword = () => {
       console.log(123)
-      this.setState({
-        onerror: -1,
+      this.downloadFile(this.state.password)
+      // this.setState({
+      //   onerror: -1,
+      // })
+    }
+    getPageDetail = () => {
+      $.ajax({
+        xhrFields: {withCredentials: true},
+        type: "get",
+        url: 'http://sodaling.ngrok.elitemc.cn:8000/api/netdisk/sharefile/8R7pIo4opy8P_0621/',
+        success: (res) => {
+          console.log(123)
+          if (res.code === 20000){
+            this.setState({
+              detail: res.data,
+            })
+          }
+        },
+      })
+    }
+    downloadFile = (password) => {
+      console.log(password)
+      $.ajax({
+        xhrFields: {withCredentials: true},
+        type: "post",
+        url: 'http://sodaling.ngrok.elitemc.cn:8000/api/netdisk/sharefile/get_file/',
+        headers:{
+          'X-CSRFToken': '5KoBDnI9wtHTcqz64brDbQN1MQ3yPUVm'
+        },
+        data: {
+          id: this.state.detail.id,
+          // password: password ? password : '',
+          password,
+        },
+        success: (res) => {
+          console.log(123)
+          if (res.code === 20000){
+            this.setState({
+              onerror: 0,
+            })
+            console.log('下载逻辑',res.data.return_url)
+            const url = res.data.return_url;
+            // $.ajax({
+            //   xhrFields: {withCredentials: true},
+            //   url,
+            //   type: 'get',
+            //   success: () => {
+            //     console.log('success')
+            //   }
+            // })
+            const a = document.createElement('a'); // 创建a标签
+            a.setAttribute('download','123');
+            a.href = `${url}&is_download=1`;
+            document.body.appendChild(a);
+            // a.click();
+          } else if(res.code === 30114){
+            this.setState({
+              onerror: -1,
+            })
+          }
+        },
       })
     }
     render() {
       // console.log(moment())
+      const { detail } = this.state;
       return (
         <div  className="share-container">
           <Header name="123" />
           <div className="share-content">
             <div className="doc-title">
-              大数据分析.doc
-                    </div>
+              {detail.file_name}
+            </div>
             <div className="info-block">
-              <span>{moment().format("YYYY-MM-DD hh:mm")}</span>
-              <span className="limitTime">失效时间: 永久有效</span>
+              <span>{detail.share_at}</span>
+              <span className="limitTime">
+                失效时间:
+                {
+                  ((expire) => {
+                    switch(expire) {
+                      case 0:
+                      return ' 永久有效';
+                      case 7:
+                      return ' 7天有效';
+                      case 1:
+                      return ' 1天有效';
+                    }
+                  })(detail.expire_at)
+                }
+              </span>
             </div>
             <div className="content">
               <div className="download-wrap">
                 {
-                  false ?
-                    <antd.Button type="primary">
+                  detail.type === 1 ?
+                    <antd.Button onClick={this.downloadFile.bind(this,'')} type="primary">
                       下载
                     </antd.Button>
                     :
                     <div>
                       <div>
                         <span>密码</span>
-                        <antd.Input className={`pwdinput ${this.state.onerror === -1 ? 'on-error' : ''}`} placeholder="请输入密码" />
+                        <antd.Input onChange={this.inputOnchange} className={`pwdinput ${this.state.onerror === -1 ? 'on-error' : ''}`} placeholder="请输入密码" />
                         <antd.Button onClick={this.checkpassword} type="primary">
                           下载
                         </antd.Button>
@@ -309,7 +414,8 @@
             </div>
           </div>
           <Share />
-          <Footer name="123" />
+          <Uploaderbox />
+          <Footer/>
         </div>
       );
     }
@@ -322,7 +428,10 @@
       return (
         <div>
           <div className="mobile-header">
-            <img src="../images/logo.png" className="header-logo" />
+          <div className="header-logo">
+            <i className="iconfont" style={{ color: '#fff', fontSize:'22px' }}>&#xe601;</i>
+          </div>
+            {/* <img src="../images/logo.png" className="header-logo" /> */}
             <span>企业网盘</span>
           </div>
           {

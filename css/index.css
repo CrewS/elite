@@ -255,7 +255,11 @@ html, body {
     vertical-align: middle;
     height: 32px;
     width: 32px;
-    margin-right: 10px; }
+    margin-right: 10px;
+    display: inline-block;
+    background-color: #0692e1;
+    border-radius: 50%;
+    line-height: 32px; }
   .mobile-header span {
     display: inline-block;
     font-size: 20px;

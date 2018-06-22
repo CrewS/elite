@@ -133,11 +133,9 @@ class Doc extends React.Component {
     const columns = [{
       title: '文件名称',
       dataIndex: 'name',
-      sorter: true,
     }, {
       title: '文件大小',
       dataIndex: 'size',
-      sorter: true,
     }, {
       title: '类型',
       dataIndex: 'type',
@@ -147,7 +145,6 @@ class Doc extends React.Component {
     }, {
       title: '上传时间',
       dataIndex: 'time',
-      sorter: true,
     }, {
       title: '文件路径',
       dataIndex: 'place',

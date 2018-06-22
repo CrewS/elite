@@ -119,6 +119,19 @@
     div:nth-of-type(1){
       line-height: 32px;
     }
+    div:nth-of-type(1).noline-height{
+      line-height: 20px;
+    }
+    .share-mt{
+      margin-top: 4px;
+      overflow: hidden;
+      span{
+        float: left;
+      }
+      span:nth-of-type(2){
+        margin-top: 4px;
+      }
+    }
   }
   .ant-radio-wrapper{
     margin-bottom: 10px;

@@ -64,8 +64,8 @@ class Footer extends React.Component {
 }
 
 // ajax请求
-const HOST = 'http://weijie.ngrok.elitemc.cn:8000';
-const TOKEN = '7BdppeWIoKWKNhh7I2sDsw4hibRIVgkW';
+const HOST = '0.0.0.0:8000';
+const TOKEN = 'q0Bl1YuoYsu4aN9Yi4fXMnm8lglORtJA';
 function ajax(options){
   $.ajax({
     xhrFields: {withCredentials: true},

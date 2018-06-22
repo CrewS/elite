@@ -18,6 +18,7 @@ class Newfile extends React.Component {
     checkedKeys: [],
     selectedKeys: [],
     value: 0,
+    title:[],
     model:{
       ModalText: 'Content of the modal',
       visible: false,
@@ -43,14 +44,30 @@ class Newfile extends React.Component {
       autoExpandParent: false,
     });
   }
-  onCheck = (checkedKeys) => {
+  onCheck = (checkedKeys,e) => {
     console.log('onCheck', checkedKeys);
+    const list = []
+    e.checkedNodes.map(checkedNode=>{
+      return list.push(checkedNode.props.title)
+
+    })
     this.setState({
-      checkedKeys });
+      title:list
+    });
+    //console.log('onInfo', title);
+    this.setState({
+      checkedKeys:checkedKeys
+    });
+
+
+
+
   }
   onSelect = (selectedKeys, info) => {
-    console.log('onSelect', info);
-    this.setState({ selectedKeys });
+    console.log('onSelect', info,selectedKeys);
+    this.setState({
+      selectedKeys:selectedKeys
+     });
   }
   renderTreeNodes = (data) => {
 
@@ -81,7 +98,7 @@ class Newfile extends React.Component {
     $.ajax({
       xhrFields: {withCredentials: true},
       type: "get",
-      url: 'http://eliteu.ngrok.elitemc.cn/api/netdisk/groups',
+      url: 'http://0.0.0.0:8000/api/netdisk/groups',
       success:(res)=>{
         console.log(res.data);
         this.setState({
@@ -128,7 +145,7 @@ class Newfile extends React.Component {
 
   render() {
     const { visible, confirmLoading, ModalText } = this.state.model;
-
+    console.log(this.state.title);
     return (
 
       <div className="newfile">
@@ -139,7 +156,7 @@ class Newfile extends React.Component {
             <antd.Col span={6}><antd.Input placeholder="Basic usage" /></antd.Col>
           </antd.Row>
           <antd.Row className="input-row">
-            <antd.Col span={3}>对谁可见*</antd.Col>
+            <antd.Col span={3} className="noline-height">对谁可见*</antd.Col>
             <antd.Col span={21}>
               <RadioGroup onChange={this.onChange} value={this.state.value}>
                 <antd.Radio value={1}>A<span>全员课可见</span><span></span></antd.Radio>
@@ -158,7 +175,7 @@ class Newfile extends React.Component {
 
           <antd.Row className="input-row">
             <antd.Col span={3}>分享文件链接</antd.Col>
-            <antd.Col span={21}><antd.Switch defaultChecked onChange={this.SelectOnChange} checkedChildren="开" unCheckedChildren="关"/><span>打开后，知道链接的人可以直接下载或通过密码下载相应文件</span></antd.Col>
+            <antd.Col span={21} className="share-mt"><antd.Switch defaultChecked onChange={this.SelectOnChange} checkedChildren="开" unCheckedChildren="关"/><span>打开后，知道链接的人可以直接下载或通过密码下载相应文件</span></antd.Col>
           </antd.Row>
 
           <antd.Row className="input-row">
@@ -193,7 +210,7 @@ class Newfile extends React.Component {
             onExpand={this.onExpand}
             expandedKeys={this.state.expandedKeys}
             autoExpandParent={this.state.autoExpandParent}
-            onCheck={this.onCheck}
+            onCheck={this.onCheck.bind(this)}
             checkedKeys={this.state.checkedKeys}
             onSelect={this.onSelect}
             selectedKeys={this.state.selectedKeys}>
